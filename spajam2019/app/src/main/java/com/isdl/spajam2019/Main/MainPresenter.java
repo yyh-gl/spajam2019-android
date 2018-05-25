@@ -9,8 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -20,17 +18,15 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainPresenter {
-    OkHttpClient okHttpClient;
-    Retrofit retrofit;
+    QiitaApiService qiitaApiService;
 
     @Inject
-    public MainPresenter(OkHttpClient okHttpClient, Retrofit retrofit) {
-        this.okHttpClient = okHttpClient;
-        this.retrofit = retrofit;
+    public MainPresenter(QiitaApiService qiitaApiService) {
+        this.qiitaApiService = qiitaApiService;
     }
 
     public void apiRequest() {
-        retrofit.create(QiitaApiService.class).items()
+        qiitaApiService.items()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<QiitaItem>>() {
