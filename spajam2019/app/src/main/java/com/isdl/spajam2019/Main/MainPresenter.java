@@ -5,6 +5,7 @@ import android.util.Log;
 import com.isdl.spajam2019.Models.QiitaItem;
 import com.isdl.spajam2019.Services.QiitaApiService;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +45,32 @@ public class MainPresenter {
                     public void onNext(List<QiitaItem> qiitaItems) {
                         Log.d("QiitaItem:", "onNext");
 
+                    }
+                });
+    }
+
+    public void apiPost() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("name", "ytakaya");
+        hashMap.put("age", "25");
+
+        qiitaApiService.post(hashMap)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Void>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("Post:", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("Post:", "onError");
+                    }
+
+                    @Override
+                    public void onNext(Void aVoid) {
+                        Log.d("Post:", "onNext");
                     }
                 });
     }

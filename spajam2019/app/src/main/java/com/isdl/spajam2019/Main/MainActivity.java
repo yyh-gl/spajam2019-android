@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mainPresenter.apiRequest();
+        mainPresenter.apiPost();
 
     }
 
