@@ -2,9 +2,9 @@ package com.isdl.spajam2019;
 
 import android.app.Application;
 
-import com.isdl.spajam2019.DI.Component.ApplicationComponent;
-import com.isdl.spajam2019.DI.Component.DaggerApplicationComponent;
-import com.isdl.spajam2019.DI.Module.ApplicationModule;
+import com.isdl.spajam2019.DI.Component.AppComponent;
+import com.isdl.spajam2019.DI.Component.DaggerAppComponent;
+import com.isdl.spajam2019.DI.Module.AppModule;
 import com.isdl.spajam2019.DI.Module.InfraModule;
 
 /**
@@ -12,21 +12,19 @@ import com.isdl.spajam2019.DI.Module.InfraModule;
  */
 
 public class Spajam2019Application extends Application {
-    private ApplicationComponent applicationComponent;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // AppComponentでdeprecatedエラーが出るとき
-        // そのモジュールが使用されていないため、no-opになる。無視可
-        applicationComponent = DaggerApplicationComponent
+        appComponent = DaggerAppComponent
                 .builder()
-                .applicationModule(new ApplicationModule(this))
+                .appModule(new AppModule(this))
                 .infraModule(new InfraModule())
                 .build();
     }
 
-    public ApplicationComponent getAppComponent() {
-        return applicationComponent;
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 }

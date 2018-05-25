@@ -9,7 +9,6 @@ import com.isdl.spajam2019.Spajam2019Application;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
-//    MainPresenter mainPresenter = new MainPresenter();
 
     @Inject
     MainPresenter mainPresenter;

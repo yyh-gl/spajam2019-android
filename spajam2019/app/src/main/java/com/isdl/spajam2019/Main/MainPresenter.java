@@ -7,6 +7,8 @@ import com.isdl.spajam2019.Services.QiitaApiService;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import rx.Observer;
@@ -21,6 +23,7 @@ public class MainPresenter {
     OkHttpClient okHttpClient;
     Retrofit retrofit;
 
+    @Inject
     public MainPresenter(OkHttpClient okHttpClient, Retrofit retrofit) {
         this.okHttpClient = okHttpClient;
         this.retrofit = retrofit;
