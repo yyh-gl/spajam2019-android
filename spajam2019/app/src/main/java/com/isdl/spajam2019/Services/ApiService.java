@@ -18,7 +18,7 @@ import rx.Observable;
  * 参考　https://qiita.com/hymmr/items/cbb1013617cd43b8c7c4
  */
 
-public interface QiitaApiService {
+public interface ApiService {
     @Headers({
             "Accept: application/json",
             "Content-type: application/json"

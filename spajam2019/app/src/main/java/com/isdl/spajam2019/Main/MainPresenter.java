@@ -3,7 +3,7 @@ package com.isdl.spajam2019.Main;
 import android.util.Log;
 
 import com.isdl.spajam2019.Models.QiitaItem;
-import com.isdl.spajam2019.Services.QiitaApiService;
+import com.isdl.spajam2019.Services.ApiService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,15 +19,15 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainPresenter {
-    QiitaApiService qiitaApiService;
+    ApiService apiService;
 
     @Inject
-    public MainPresenter(QiitaApiService qiitaApiService) {
-        this.qiitaApiService = qiitaApiService;
+    public MainPresenter(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     public void apiRequest() {
-        qiitaApiService.items()
+        apiService.items()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<QiitaItem>>() {
@@ -54,7 +54,7 @@ public class MainPresenter {
         hashMap.put("name", "ytakaya");
         hashMap.put("age", "25");
 
-        qiitaApiService.post(hashMap)
+        apiService.post(hashMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Void>() {
