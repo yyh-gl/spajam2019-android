@@ -3,7 +3,7 @@ package com.isdl.spajam2019.Main;
 
 import android.util.Log;
 
-import com.isdl.spajam2019.Models.QiitaItem;
+import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.Services.ApiService;
 
 import java.util.HashMap;
@@ -30,13 +30,16 @@ public class MainPresenter {
     }
 
     public void apiRequest() {
-        apiService.items()
+        apiService.getUser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<List<QiitaItem>>() {
+                .subscribe(new DisposableSingleObserver<List<User>>() {
                     @Override
-                    public void onSuccess(List<QiitaItem> qiitaItems) {
-                        Log.d("test", qiitaItems.toString());
+                    public void onSuccess(List<User> users) {
+                        for (int i = 0; i < users.size(); i++) {
+                            Log.d("test", users.get(i).getName());
+                        }
+
                     }
 
                     @Override
