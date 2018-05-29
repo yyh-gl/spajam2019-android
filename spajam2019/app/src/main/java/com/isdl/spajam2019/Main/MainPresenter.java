@@ -1,5 +1,6 @@
 package com.isdl.spajam2019.Main;
 
+
 import android.util.Log;
 
 import com.isdl.spajam2019.Models.QiitaItem;
@@ -10,9 +11,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by takayayuuki on 2018/05/25.
@@ -28,23 +31,17 @@ public class MainPresenter {
 
     public void apiRequest() {
         apiService.items()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<QiitaItem>>() {
+                .subscribe(new DisposableSingleObserver<List<QiitaItem>>() {
                     @Override
-                    public void onCompleted() {
-                        Log.d("QiitaItem:", "onCompleted");
+                    public void onSuccess(List<QiitaItem> qiitaItems) {
+                        Log.d("test", qiitaItems.toString());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("error:", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(List<QiitaItem> qiitaItems) {
-                        Log.d("QiitaItem:", "onNext");
-
+                        Log.d("test", e.toString());
                     }
                 });
     }
@@ -55,22 +52,17 @@ public class MainPresenter {
         hashMap.put("age", "25");
 
         apiService.post(hashMap)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Void>() {
+                .subscribe(new DisposableCompletableObserver() {
                     @Override
-                    public void onCompleted() {
-                        Log.d("Post:", "onCompleted");
+                    public void onComplete() {
+                        Log.d("test", "post success");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("Post:", "onError");
-                    }
-
-                    @Override
-                    public void onNext(Void aVoid) {
-                        Log.d("Post:", "onNext");
+                        Log.d("test", e.toString());
                     }
                 });
     }

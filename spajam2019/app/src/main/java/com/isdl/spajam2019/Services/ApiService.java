@@ -5,11 +5,12 @@ import com.isdl.spajam2019.Models.QiitaItem;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import rx.Observable;
 
 /**
  * [@GET]，[@POST]等でリクエスト種別を変更
@@ -23,10 +24,10 @@ public interface ApiService {
             "Accept: application/json",
             "Content-type: application/json"
     })
-    @GET("y4m0jgy4")
-    Observable<List<QiitaItem>> items();
+    @GET("1avwb2j1")
+    Single<List<QiitaItem>> items();
 
-    @POST("y4m0jgy4")
-    Observable<Void> post(@Body HashMap<String, String> body);
+    @POST("1avwb2j1")
+    Completable post(@Body HashMap<String, String> body);
     // 他に API があればここに並べる
 }
