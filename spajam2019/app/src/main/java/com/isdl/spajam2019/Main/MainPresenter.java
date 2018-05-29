@@ -6,7 +6,6 @@ import android.util.Log;
 import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.Services.ApiService;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -50,11 +49,16 @@ public class MainPresenter {
     }
 
     public void apiPost() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("name", "ytakaya");
-        hashMap.put("age", "25");
+        User user = new User();
 
-        apiService.post(hashMap)
+        user.setId(000000);
+        user.setName("testくん");
+        user.setAge(24);
+        user.setMessage("やっほ〜");
+        user.setCreatedAt("2018");
+        user.setUpdatedAt("2019");
+
+        apiService.postUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {
