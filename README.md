@@ -1,6 +1,43 @@
 # フロントエンド開発用リポジトリ  
 -----------------------------------
-## 開発規約  
+## ディレクトリ構成
+-----------------------------------
+## アーキテクチャ
+-----------------------------------
+## 使用ライブラリ
+- retrofit2.4.0
+- Gson2.8.2
+- OkHttp3.10.0
+- rxjava2.1.11
+- Dagger2.13
+
+## retrofit2
+Square製のRESTクライアントライブラリ
+
+参考URL: https://qiita.com/hymmr/items/cbb1013617cd43b8c7c4
+
+## Gson
+Googleが提供するJSONデータとJavaオブジェクトを相互に変換するためのライブラリ  
+今回はHTTPレスポンスのJSONデータをJavaオブジェクトに変換する際に使用  
+`Models`にPOJOスキーマを設定し，そのスキーマに従って格納  
+`JSON形式→POJOの変換`には http://www.jsonschema2pojo.org/ を使用
+
+参考URL: https://qiita.com/u-chida/items/cbdd040e4199a10936dc
+## OkHttp
+Square製のHTTP通信とSPDY通信をするためのクライアント用ライブラリ  
+今回はOkHttp単体ではなくretrofit2と組み合わせ，主にlogging部分に使用
+
+参考URL: https://qiita.com/joji/items/488b85c90b5147c99e3a
+
+## rxjava2
+androidでは外部通信に関してはサブスレッドで実装する必要がある．　  
+これに関して今までのハッカソンでは`Thread`や`AsyncTask`等を用いて実装して来たがメインスレッドとの同期が困難であった．　  
+そこで今回は非同期処理部分として`rxjava2`を使用．
+今回は簡単のためにGETリクエスト時は`Single<T>`を，POSTリクエスト時には`Completable`を返却
+
+## Dagger2
+DIコンテナの１つ
+
 ### 1. 命名規約
 - 英語のみ  
 - 二単語以上の変数名をつける場合はキャメルケース  

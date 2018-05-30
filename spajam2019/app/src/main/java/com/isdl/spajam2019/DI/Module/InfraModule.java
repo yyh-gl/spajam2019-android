@@ -1,6 +1,6 @@
 package com.isdl.spajam2019.DI.Module;
 
-import com.isdl.spajam2019.Services.QiitaApiService;
+import com.isdl.spajam2019.Services.ApiService;
 
 import javax.inject.Singleton;
 
@@ -18,7 +18,7 @@ public class InfraModule {
 
     @Singleton
     @Provides
-    public QiitaApiService provideQiitaApiService(Retrofit retrofit) {
-        return retrofit.create(QiitaApiService.class);
+    public ApiService provideQiitaApiService(Retrofit retrofit) {
+        return retrofit.create(ApiService.class);
     }
 }

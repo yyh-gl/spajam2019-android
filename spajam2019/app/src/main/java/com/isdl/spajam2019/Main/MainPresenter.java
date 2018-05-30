@@ -1,49 +1,75 @@
 package com.isdl.spajam2019.Main;
 
+
 import android.util.Log;
 
-import com.isdl.spajam2019.Models.QiitaItem;
-import com.isdl.spajam2019.Services.QiitaApiService;
+import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Services.ApiService;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by takayayuuki on 2018/05/25.
  */
 
 public class MainPresenter {
-    QiitaApiService qiitaApiService;
+    ApiService apiService;
 
     @Inject
-    public MainPresenter(QiitaApiService qiitaApiService) {
-        this.qiitaApiService = qiitaApiService;
+    public MainPresenter(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     public void apiRequest() {
-        qiitaApiService.items()
-                .subscribeOn(Schedulers.newThread())
+        apiService.getUser()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<QiitaItem>>() {
+                .subscribe(new DisposableSingleObserver<List<User>>() {
                     @Override
-                    public void onCompleted() {
-                        Log.d("QiitaItem:", "onCompleted");
+                    public void onSuccess(List<User> users) {
+                        for (int i = 0; i < users.size(); i++) {
+                            Log.d("test", users.get(i).getName());
+                        }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("error:", e.toString());
+                        Log.d("test", e.toString());
+                    }
+                });
+    }
+
+    public void apiPost() {
+        User user = new User();
+
+        user.setId(000000);
+        user.setName("testくん");
+        user.setAge(24);
+        user.setMessage("やっほ〜");
+        user.setCreatedAt("2018");
+        user.setUpdatedAt("2019");
+
+        apiService.postUser(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("test", "post success");
                     }
 
                     @Override
-                    public void onNext(List<QiitaItem> qiitaItems) {
-                        Log.d("QiitaItem:", "onNext");
-
+                    public void onError(Throwable e) {
+                        Log.d("test", e.toString());
                     }
                 });
     }
