@@ -25,7 +25,7 @@
         </activity>
         <activity android:name=".Recycler.RecyclerActivity" />
         <activity android:name=".Gps.GpsPermissionActivity" />
-        <activity android:name=".Gps.GpsActivity"></activity>
+        <activity android:name=".Gps.LocationActivity"></activity>
     </application>
 
 </manifest>

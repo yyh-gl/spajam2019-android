@@ -7,11 +7,11 @@ import com.isdl.spajam2019.R;
 
 import javax.inject.Inject;
 
-public class GpsActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity {
 
     @Inject
     GpsPermissionPresenter gpsPermissionPresenter;
-    GpsPresenter gpsPresenter;
+    LocationPresenter locationPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

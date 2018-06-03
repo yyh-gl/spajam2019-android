@@ -28,7 +28,7 @@ public class GpsPermissionActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             gpsPermissionPresenter.checkPermission(this);
         } else {
-            gpsPermissionPresenter.startLocationActivity();
+            gpsPermissionPresenter.startLocationActivity(this);
         }
     }
 
@@ -39,7 +39,7 @@ public class GpsPermissionActivity extends AppCompatActivity {
         if (requestCode == REQUEST_PERMISSION) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                gpsPermissionPresenter.startLocationActivity();
+                gpsPermissionPresenter.startLocationActivity(this);
 
             } else {
                 // それでも拒否された時の対応

@@ -3,6 +3,7 @@ package com.isdl.spajam2019.Gps;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +37,7 @@ public class GpsPermissionPresenter implements GpsPermissionContract.Presenter {
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            startLocationActivity();
+            startLocationActivity(activity);
         }
         // 拒否していた場合
         else {
@@ -65,8 +66,9 @@ public class GpsPermissionPresenter implements GpsPermissionContract.Presenter {
     }
 
 
-    public void startLocationActivity() {
+    public void startLocationActivity(Activity activity) {
         Log.d("TEST", "startLocationActivity()に入ったよ");
-        //ここで本来はGpsActivityへのIntent遷移
+        Intent intent = new Intent(app.getApplicationContext(), LocationActivity.class);
+        activity.startActivity(intent);
     }
 }
