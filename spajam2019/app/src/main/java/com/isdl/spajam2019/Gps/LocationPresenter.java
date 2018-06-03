@@ -1,15 +1,93 @@
 package com.isdl.spajam2019.Gps;
 
+import android.Manifest;
+import android.app.Application;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.isdl.spajam2019.Services.ApiService;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class LocationPresenter implements LocationListener {
+import javax.inject.Inject;
+
+public class LocationPresenter implements LocationContract.Presenter, LocationListener {
+    Application app;
+    ApiService apiService;
+
+    private LocationContract.View view;
+
+
     private StringBuilder strBuf = new StringBuilder();
+
+
+    private static final int MinTime = 1000;
+    private static final float MinDistance = 50;
+
+    @Inject
+    public LocationPresenter(Application app, ApiService apiService) {
+        this.app = app;
+        this.apiService = apiService;
+    }
+
+    @Override
+    public void startGPS(LocationManager locationManager) {
+        strBuf.append("startGPS\n");
+
+        view.setText(strBuf.toString());
+
+        Log.d("LocationActivity", "gpsEnabled");
+        final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gpsEnabled) {
+            // GPSを設定するように促す
+            view.enableLocationSettings();
+        }
+
+        if (locationManager != null) {
+            Log.d("LocationActivity", "locationManager.requestLocationUpdates");
+
+            try {
+                // minTime = 1000msec, minDistance = 50m
+                if (ActivityCompat.checkSelfPermission(app.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                    return;
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MinTime, MinDistance, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                Toast toast = Toast.makeText(app.getApplicationContext(), "例外が発生、位置情報のPermissionを許可していますか？", Toast.LENGTH_SHORT);
+                toast.show();
+                view.finishActivity();
+            }
+        }
+    }
+
+    @Override
+    public void stopGPS(LocationManager locationManager) {
+        if (locationManager != null) {
+            Log.d("LocationActivity", "onStop()");
+            strBuf.append("stopGPS\n");
+            view.setText(strBuf.toString());
+
+            // update を止める
+            if (ActivityCompat.checkSelfPermission(app.getApplicationContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(app.getApplicationContext(),
+                            Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.removeUpdates(this);
+        }
+    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -41,7 +119,8 @@ public class LocationPresenter implements LocationListener {
 
         strBuf.append("----------\n");
 
-//        textView.setText(strBuf);//ここはLocationContract.Viewでメソッド記述
+        view.setText(strBuf.toString());
+
     }
 
     @Override
@@ -49,17 +128,18 @@ public class LocationPresenter implements LocationListener {
         switch (status) {
             case LocationProvider.AVAILABLE:
                 strBuf.append("LocationProvider.AVAILABLE\n");
-//                textView.setText(strBuf);
+                view.setText(strBuf.toString());
                 break;
             case LocationProvider.OUT_OF_SERVICE:
                 strBuf.append("LocationProvider.OUT_OF_SERVICE\n");
-//                textView.setText(strBuf);
+                view.setText(strBuf.toString());
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
                 strBuf.append("LocationProvider.TEMPORARILY_UNAVAILABLE\n");
-//                textView.setText(strBuf);
+                view.setText(strBuf.toString());
                 break;
         }
+
     }
 
     @Override
@@ -71,4 +151,7 @@ public class LocationPresenter implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
+
+
 }
+

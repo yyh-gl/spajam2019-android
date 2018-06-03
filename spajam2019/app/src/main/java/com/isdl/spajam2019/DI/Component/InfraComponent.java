@@ -3,6 +3,7 @@ package com.isdl.spajam2019.DI.Component;
 import com.isdl.spajam2019.DI.Module.AppModule;
 import com.isdl.spajam2019.DI.Module.InfraModule;
 import com.isdl.spajam2019.Gps.GpsPermissionActivity;
+import com.isdl.spajam2019.Gps.LocationActivity;
 import com.isdl.spajam2019.Main.MainActivity;
 
 import javax.inject.Singleton;
@@ -24,4 +25,6 @@ public interface InfraComponent {
 //    void inject(RecyclerActivity recyclerActivity);
 
     void inject(GpsPermissionActivity gpsPermissionActivity);
+
+    void inject(LocationActivity locationActivity);
 }
