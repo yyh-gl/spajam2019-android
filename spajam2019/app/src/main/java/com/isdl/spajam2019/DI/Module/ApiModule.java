@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
  */
 
 @Module
-public class InfraModule {
+public class ApiModule {
 
 
     @Singleton
