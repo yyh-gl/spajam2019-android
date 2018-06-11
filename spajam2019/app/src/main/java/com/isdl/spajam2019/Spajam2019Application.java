@@ -14,12 +14,15 @@ import com.isdl.spajam2019.DI.Module.AppModule;
 public class Spajam2019Application extends Application {
     private AppComponent appComponent;
 
+    private static Spajam2019Application instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         appComponent = DaggerAppComponent
                 .builder()
-                .appModule(new AppModule(this))
+                .appModule(new AppModule(instance))
                 .apiModule(new ApiModule())
                 .build();
     }

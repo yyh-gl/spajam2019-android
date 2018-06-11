@@ -1,10 +1,10 @@
 package com.isdl.spajam2019.DI.Component;
 
+import android.app.Application;
+
 import com.isdl.spajam2019.DI.Module.ApiModule;
 import com.isdl.spajam2019.DI.Module.AppModule;
-import com.isdl.spajam2019.Gps.GpsPermissionActivity;
-import com.isdl.spajam2019.Gps.LocationActivity;
-import com.isdl.spajam2019.Main.MainActivity;
+import com.isdl.spajam2019.Services.ApiService;
 
 import javax.inject.Singleton;
 
@@ -20,11 +20,7 @@ import dagger.Component;
                 ApiModule.class
         })
 public interface AppComponent {
-    void inject(MainActivity mainActivity);
+    Application application();
 
-//    void inject(RecyclerActivity recyclerActivity);
-
-    void inject(GpsPermissionActivity gpsPermissionActivity);
-
-    void inject(LocationActivity locationActivity);
+    ApiService apiService();
 }

@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.isdl.spajam2019.Gps.DI.Component.DaggerLocationComponent;
+import com.isdl.spajam2019.Gps.DI.Module.LocationModule;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
@@ -28,7 +30,12 @@ public class LocationActivity extends AppCompatActivity implements LocationContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
-        ((Spajam2019Application) getApplication()).getAppComponent().inject(this);
+        DaggerLocationComponent.builder()
+                .appComponent(((Spajam2019Application) getApplicationContext())
+                        .getAppComponent())
+                .locationModule(new LocationModule(this))
+                .build()
+                .inject(this);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         textView = findViewById(R.id.textView);

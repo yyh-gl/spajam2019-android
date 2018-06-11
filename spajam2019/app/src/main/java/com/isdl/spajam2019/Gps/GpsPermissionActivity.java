@@ -7,12 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.isdl.spajam2019.Gps.DI.Component.DaggerGpsPermissionComponent;
+import com.isdl.spajam2019.Gps.DI.Module.GpsPermissionModule;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
 import javax.inject.Inject;
 
-public class GpsPermissionActivity extends AppCompatActivity {
+public class GpsPermissionActivity extends AppCompatActivity implements GpsPermissionContract.View {
     private final int REQUEST_PERMISSION = 1000;
 
     @Inject
@@ -22,7 +24,12 @@ public class GpsPermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpspermission);
-        ((Spajam2019Application) getApplication()).getAppComponent().inject(this);
+        DaggerGpsPermissionComponent.builder()
+                .appComponent(((Spajam2019Application) getApplicationContext())
+                        .getAppComponent())
+                .gpsPermissionModule(new GpsPermissionModule(this))
+                .build()
+                .inject(this);
 
         // Android 6, API 23以上でパーミッシンの確認
         if (Build.VERSION.SDK_INT >= 23) {

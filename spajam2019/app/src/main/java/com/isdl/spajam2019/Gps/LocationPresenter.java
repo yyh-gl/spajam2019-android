@@ -33,23 +33,24 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
     private static final float MinDistance = 50;
 
     @Inject
-    public LocationPresenter(Application app, ApiService apiService) {
+    public LocationPresenter(Application app, ApiService apiService, LocationContract.View view) {
         this.app = app;
         this.apiService = apiService;
+        this.view = view;
     }
 
     @Override
     public void startGPS(LocationManager locationManager) {
         strBuf.append("startGPS\n");
 
-//        view.setText(strBuf.toString());
+        view.setText(strBuf.toString());
         Log.d("GPS", strBuf.toString());
 
         Log.d("LocationActivity", "gpsEnabled");
         final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!gpsEnabled) {
             // GPSを設定するように促す
-//            view.enableLocationSettings();
+            view.enableLocationSettings();
         }
 
         if (locationManager != null) {
@@ -65,7 +66,7 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
 
                 Toast toast = Toast.makeText(app.getApplicationContext(), "例外が発生、位置情報のPermissionを許可していますか？", Toast.LENGTH_SHORT);
                 toast.show();
-//                view.finishActivity();
+                view.finishActivity();
             }
         }
     }
@@ -75,7 +76,7 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
         if (locationManager != null) {
             Log.d("LocationActivity", "onStop()");
             strBuf.append("stopGPS\n");
-//            view.setText(strBuf.toString());
+            view.setText(strBuf.toString());
             Log.d("GPS", strBuf.toString());
 
             // update を止める
@@ -93,7 +94,7 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
 
     @Override
     public void onLocationChanged(Location location) {
-        strBuf.append("----------\n");
+        strBuf.append("-----動いたよ〜〜〜〜-----\n");
 
         String str = "Latitude = " + String.valueOf(location.getLatitude()) + "\n";
         strBuf.append(str);
@@ -121,7 +122,7 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
 
         strBuf.append("----------\n");
 
-//        view.setText(strBuf.toString());
+        view.setText(strBuf.toString());
         Log.d("GPS", strBuf.toString());
 
     }
@@ -131,17 +132,17 @@ public class LocationPresenter implements LocationContract.Presenter, LocationLi
         switch (status) {
             case LocationProvider.AVAILABLE:
                 strBuf.append("LocationProvider.AVAILABLE\n");
-//                view.setText(strBuf.toString());
+                view.setText(strBuf.toString());
                 Log.d("GPS", strBuf.toString());
                 break;
             case LocationProvider.OUT_OF_SERVICE:
                 strBuf.append("LocationProvider.OUT_OF_SERVICE\n");
-//                view.setText(strBuf.toString());
+                view.setText(strBuf.toString());
                 Log.d("GPS", strBuf.toString());
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
                 strBuf.append("LocationProvider.TEMPORARILY_UNAVAILABLE\n");
-//                view.setText(strBuf.toString());
+                view.setText(strBuf.toString());
                 Log.d("GPS", strBuf.toString());
                 break;
         }
