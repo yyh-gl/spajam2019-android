@@ -1,12 +1,11 @@
 package com.isdl.spajam2019.Main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
-import com.isdl.spajam2019.Gps.GpsPermissionActivity;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
@@ -32,9 +31,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mainPresenter.apiRequest();
         mainPresenter.apiPost();
 
-        Intent intent = new Intent(this, GpsPermissionActivity.class);
-        startActivity(intent);
-        finish();
+        Button buttonRecycler = findViewById(R.id.toRecycler);
+        Button buttonGps = findViewById(R.id.toGps);
+
+        buttonRecycler.setOnClickListener(view -> mainPresenter.toRecycler(this));
+        buttonGps.setOnClickListener(view -> mainPresenter.toGps(this));
+
     }
 
     @Override

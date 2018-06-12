@@ -2,6 +2,8 @@ package com.isdl.spajam2019.Recycler;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
@@ -26,5 +28,17 @@ public class RecyclerActivity extends AppCompatActivity implements RecyclerContr
                 .activityModule(new ActivityModule(this))
                 .build()
                 .inject(this);
+
+        RecyclerView rv = findViewById(R.id.recycler);
+
+        RecyclerAdapter adapter = new RecyclerAdapter(recyclerPresenter.createDataset());
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+
+        rv.setHasFixedSize(true);
+
+        rv.setLayoutManager(llm);
+
+        rv.setAdapter(adapter);
     }
 }
