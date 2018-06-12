@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.isdl.spajam2019.Gps.DI.Component.DaggerGpsPermissionComponent;
-import com.isdl.spajam2019.Gps.DI.Module.GpsPermissionModule;
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
@@ -24,10 +24,10 @@ public class GpsPermissionActivity extends AppCompatActivity implements GpsPermi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpspermission);
-        DaggerGpsPermissionComponent.builder()
+        DaggerActivityComponent.builder()
                 .appComponent(((Spajam2019Application) getApplicationContext())
                         .getAppComponent())
-                .gpsPermissionModule(new GpsPermissionModule(this))
+                .activityModule(new ActivityModule(this))
                 .build()
                 .inject(this);
 
