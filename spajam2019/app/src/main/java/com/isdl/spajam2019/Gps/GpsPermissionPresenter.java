@@ -77,5 +77,6 @@ public class GpsPermissionPresenter implements GpsPermissionContract.Presenter {
         Log.d("TEST", "startLocationActivity()に入ったよ");
         Intent intent = new Intent(app.getApplicationContext(), LocationActivity.class);
         activity.startActivity(intent);
+        activity.finish();
     }
 }

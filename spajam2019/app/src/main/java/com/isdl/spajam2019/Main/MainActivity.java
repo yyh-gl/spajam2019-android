@@ -29,16 +29,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 .build()
                 .inject(this);
 
+        mainPresenter.apiRequest();
+        mainPresenter.apiPost();
+
         Intent intent = new Intent(this, GpsPermissionActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mainPresenter.apiRequest();
-        mainPresenter.apiPost();
-
     }
 
 }
