@@ -1,5 +1,7 @@
 package com.isdl.spajam2019.DI.Component;
 
+import com.isdl.spajam2019.Camera.CameraActivity;
+import com.isdl.spajam2019.Camera.CameraPermissionActivity;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.Gps.GpsPermissionActivity;
 import com.isdl.spajam2019.Gps.LocationActivity;
@@ -19,4 +21,8 @@ public interface ActivityComponent {
     void inject(GpsPermissionActivity gpsPermissionActivity);
 
     void inject(RecyclerActivity recyclerActivity);
+
+    void inject(CameraActivity cameraActivity);
+
+    void inject(CameraPermissionActivity cameraPermissionActivity);
 }

@@ -28,6 +28,7 @@
         <activity android:name=".Gps.GpsPermissionActivity" />
         <activity android:name=".Gps.LocationActivity" />
         <activity android:name=".Camera.CameraActivity" />
+        <activity android:name=".Camera.CameraPermissionActivity"></activity>
     </application>
 
 </manifest>

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -17,12 +16,8 @@ import javax.inject.Inject;
 
 public class GpsPermissionPresenter implements GpsPermissionContract.Presenter {
 
-    public LocationManager locationManager;
-    private static final int MinTime = 1000;
-    private static final float MinDistance = 50;
-
     private final int REQUEST_PERMISSION = 1000;
-    GpsPermissionContract.View view;
+
 
     ApiService apiService;
     Application app;

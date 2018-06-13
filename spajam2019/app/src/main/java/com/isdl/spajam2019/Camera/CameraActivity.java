@@ -17,7 +17,10 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
+import com.isdl.spajam2019.Spajam2019Application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +28,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CameraActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class CameraActivity extends AppCompatActivity implements CameraContract.View {
     private CameraDevice mCameraDevice;
     private TextureView mTextureView;
     private Handler mBackgroundHandler = new Handler();
@@ -34,10 +39,20 @@ public class CameraActivity extends AppCompatActivity {
     private CaptureRequest.Builder mPreviewRequestBuilder;
     private CaptureRequest mPreviewRequest;
 
+    @Inject
+    CameraPresenter cameraPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
 
         mTextureView = (TextureView) findViewById(R.id.texture);
         mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
