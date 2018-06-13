@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         Button buttonRecycler = findViewById(R.id.toRecycler);
         Button buttonGps = findViewById(R.id.toGps);
+        Button buttonCamera = findViewById(R.id.toCamera);
 
         buttonRecycler.setOnClickListener(view -> mainPresenter.toRecycler(this));
         buttonGps.setOnClickListener(view -> mainPresenter.toGps(this));
+        buttonCamera.setOnClickListener(view -> mainPresenter.toCamera(this));
 
     }
 

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import com.isdl.spajam2019.Camera.CameraActivity;
 import com.isdl.spajam2019.Gps.GpsPermissionActivity;
 import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.Recycler.RecyclerActivity;
@@ -87,6 +88,11 @@ public class MainPresenter {
         Intent intent = new Intent(activity, RecyclerActivity.class);
         activity.startActivity(intent);
 
+    }
+
+    public void toCamera(Activity activity) {
+        Intent intent = new Intent(activity, CameraActivity.class);
+        activity.startActivity(intent);
     }
 
 
