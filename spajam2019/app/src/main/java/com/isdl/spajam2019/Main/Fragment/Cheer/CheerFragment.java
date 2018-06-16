@@ -1,4 +1,4 @@
-package com.isdl.spajam2019.Main.Fragment;
+package com.isdl.spajam2019.Main.Fragment.Cheer;
 
 import android.app.Fragment;
 
