@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.DataBase.CrossedUser;
 import com.isdl.spajam2019.Main.Fragment.Cheer.CheerFragment;
 import com.isdl.spajam2019.Main.Fragment.Cross.CrossFragment;
 import com.isdl.spajam2019.Main.Fragment.MusicList.MusicListFragment;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private final int REQUEST_PERMISSION = 1000;
     private Handler handler = new Handler();
+    private CrossedUser crossedUser = new CrossedUser();
 
     private CheerFragment cheeerFragment;
     private CrossFragment crossFragment;
@@ -169,10 +171,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                Log.i(TAG, "didRangingBeacons");
                 // 検出したビーコンの情報を全部Logに書き出す
                 for (Beacon beacon : beacons) {
-                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", Distance:" + beacon.getDistance());
+                    Boolean userFlag = false;//すれ違ったかどうかを判断する
+                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3());
+                    for(int i=0;i<crossedUser.crossedUser.size();i++){
+                        if(Integer.parseInt(beacon.getId3().toString()) == crossedUser.crossedUser.get(i)){
+                            userFlag = true;
+                        }
+                    }
+                    if(userFlag == false){
+                        //すれ違ったapiをたたく
+                    }
+                    userFlag = false;
                 }
             }
         });
@@ -180,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Beacon beacon = new Beacon.Builder()
                 .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 .setId2("1")
-                .setId3("80")
+                .setId3("2")
                 .setManufacturer(0x004C)
                 .build();
         BeaconParser beaconParser = new BeaconParser()
