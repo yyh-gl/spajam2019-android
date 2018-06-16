@@ -26,8 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.titleView.setText(users.get(position).getName());
-        holder.detailView.setText(users.get(position).getMessage());
+
 
     }
 

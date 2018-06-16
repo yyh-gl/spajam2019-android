@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_music_list"
+        android:icon="@drawable/music_list"
+        android:title="MusicList" />
+
+    <item
+        android:id="@+id/navigation_cross"
+        android:icon="@drawable/cross"
+        android:title="Cross" />
+
+    <item
+        android:id="@+id/navigation_cheer"
+        android:icon="@drawable/cheer"
+        android:title="Cheer" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
+</menu>
