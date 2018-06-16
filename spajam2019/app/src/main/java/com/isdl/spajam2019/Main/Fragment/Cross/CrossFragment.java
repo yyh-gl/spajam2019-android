@@ -46,7 +46,9 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     @Inject
     CrossPresenter crossPresenter;
 
+    RecyclerView rv;
     CrossAdapter adapter;
+    Context context;
 
     private List<Music> musicList;
 
@@ -89,21 +91,21 @@ public class CrossFragment extends Fragment implements CrossContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cross, container, false);
-        Context context = root.getContext();
+        context = root.getContext();
 
 
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
+        rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
         crossPresenter.getPossessedCrossMusic(2);
 
 //        CrossAdapter adapter = new CrossAdapter(musicList);
 
-        LinearLayoutManager llm = new LinearLayoutManager(context);
+//        LinearLayoutManager llm = new LinearLayoutManager(context);
+//
+//        rv.setHasFixedSize(true);
+//
+//        rv.setLayoutManager(llm);
 
-        rv.setHasFixedSize(true);
-
-        rv.setLayoutManager(llm);
-
-        rv.setAdapter(adapter);
+//        rv.setAdapter(adapter);
 
         return root;
 
@@ -114,6 +116,14 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     public void setAdapter(List<Music> possessedMusics) {
         Log.d("CrossFragment", String.valueOf(possessedMusics.size()));
         adapter = new CrossAdapter(possessedMusics);
+
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+
+        rv.setHasFixedSize(true);
+
+        rv.setLayoutManager(llm);
+
+        rv.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
