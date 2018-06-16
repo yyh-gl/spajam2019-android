@@ -1,6 +1,8 @@
 package com.isdl.spajam2019.Main.Fragment.Cheer;
 
+import android.animation.ArgbEvaluator;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,7 +41,8 @@ public class CheerFragment extends Fragment implements CheerContract.View {
     @Inject
     CheerPresenter cheerPresenter;
 
-    private int like = 0;
+    private ArgbEvaluator mArgbEvaluator = new ArgbEvaluator();
+    View root;
 
     public CheerFragment() {
         // Required empty public constructor
@@ -78,13 +81,19 @@ public class CheerFragment extends Fragment implements CheerContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_cheer, container, false);
+        root = inflater.inflate(R.layout.fragment_cheer, container, false);
+        root.setBackgroundColor((Integer) mArgbEvaluator.evaluate(0, Color.RED, Color.BLUE));
+
         ImageButton buttonCheer = (ImageButton) root.findViewById(R.id.buttonCheer);
         buttonCheer.setOnClickListener(v -> {
             cheerPresenter.postLikes(1);
         });
 
         return root;
+    }
+
+    public void changeBackgroundColor(int live) {
+        root.setBackgroundColor((Integer) mArgbEvaluator.evaluate(live, Color.RED, Color.BLUE));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

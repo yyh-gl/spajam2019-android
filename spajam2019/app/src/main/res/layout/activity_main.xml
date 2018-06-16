@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.isdl.spajam2019.Main.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
