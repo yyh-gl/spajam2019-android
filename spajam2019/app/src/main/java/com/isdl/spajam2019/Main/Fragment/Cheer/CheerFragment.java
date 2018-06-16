@@ -8,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
+import com.isdl.spajam2019.Spajam2019Application;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +34,9 @@ public class CheerFragment extends Fragment implements CheerContract.View {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    @Inject
+    CheerPresenter cheerPresenter;
 
     public CheerFragment() {
         // Required empty public constructor
@@ -54,6 +62,13 @@ public class CheerFragment extends Fragment implements CheerContract.View {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getActivity().getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
