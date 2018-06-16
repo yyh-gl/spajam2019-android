@@ -10,6 +10,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -53,4 +54,8 @@ public interface ApiService {
     @POST("users")
     Completable postUser(@Body User user);
     // 他に API があればここに並べる
+
+    @DELETE("musics/cross")
+    Single<Live> postLike(@Path("live_id") int liveId);
+
 }

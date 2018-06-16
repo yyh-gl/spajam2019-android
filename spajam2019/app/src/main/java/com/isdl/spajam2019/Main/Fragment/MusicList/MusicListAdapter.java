@@ -72,6 +72,5 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
                 listener.onItemClick(v, getLayoutPosition());
             }
         }
-
     }
 }
