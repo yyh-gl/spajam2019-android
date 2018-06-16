@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
 
 
-
         //Beaconに必要な設定
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(IBEACON_FORMAT));

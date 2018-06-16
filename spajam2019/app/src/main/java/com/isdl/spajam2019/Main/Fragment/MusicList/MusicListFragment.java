@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
@@ -89,6 +90,11 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
 
         rv = (RecyclerView) root.findViewById(R.id.musicListRecyclerView);
         musicListPresenter.getPossessedCrossMusic(2);
+
+        ImageButton playButton = rv.findViewById(R.id.buttonPlay);
+        playButton.setOnClickListener(v -> {
+
+        });
 
         return root;
     }
