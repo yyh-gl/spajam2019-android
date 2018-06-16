@@ -43,13 +43,8 @@ public class CheerFragment extends Fragment implements CheerContract.View {
      * @return A new instance of fragment CheerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CheerFragment newInstance(String param1, String param2) {
-        CheerFragment fragment = new CheerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static CheerFragment newInstance() {
+       return new CheerFragment();
     }
 
     @Override

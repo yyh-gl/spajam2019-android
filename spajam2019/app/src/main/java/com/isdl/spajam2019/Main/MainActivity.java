@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +19,10 @@ import android.widget.Toast;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Main.Fragment.Cheer.CheerFragment;
+import com.isdl.spajam2019.Main.Fragment.Cross.CrossFragment;
+import com.isdl.spajam2019.Main.Fragment.MusicList.MusicListFragment;
+import com.isdl.spajam2019.Main.Fragment.Profile.ProfileFragment;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
@@ -25,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private final int REQUEST_PERMISSION = 1000;
     private Handler handler = new Handler();
+
+    private CheerFragment cheeerFragment;
+    private CrossFragment crossFragment;
+    private MusicListFragment musicListFragment;
+    private ProfileFragment profileFragment;
 
     @Inject
     MainPresenter mainPresenter;
@@ -64,15 +76,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
-                    Log.d("Bottom", "profile");
+                    profileFragment = ProfileFragment.newInstance();
+                    openFragment(getSupportFragmentManager(),profileFragment);
                     return true;
                 case R.id.navigation_music_list:
-                    Log.d("Bottom", "musicList");
+                    musicListFragment = MusicListFragment.newInstance();
+                    openFragment(getSupportFragmentManager(),musicListFragment);
                     return true;
                 case R.id.navigation_cross:
-                    Log.d("Bottom", "cross");
+                    crossFragment = CrossFragment.newInstance();
+                    openFragment(getSupportFragmentManager(),crossFragment);
                     return true;
                 case R.id.navigation_cheer:
+                    cheeerFragment = CheerFragment.newInstance();
+                    openFragment(getSupportFragmentManager(),cheeerFragment);
                     return true;
             }
             return false;
@@ -116,5 +133,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         }
     }
+    public static void openFragment (FragmentManager fragmentManager, Fragment fragment) {
 
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.container, fragment);
+        transaction.commit();
+    }
 }
