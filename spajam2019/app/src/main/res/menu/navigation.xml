@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/profile"
-        android:title="Profile" />
-
-    <item
         android:id="@+id/navigation_music_list"
         android:icon="@drawable/music_list"
         android:title="MusicList" />
@@ -19,4 +14,9 @@
         android:id="@+id/navigation_cheer"
         android:icon="@drawable/cheer"
         android:title="" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
 </menu>
