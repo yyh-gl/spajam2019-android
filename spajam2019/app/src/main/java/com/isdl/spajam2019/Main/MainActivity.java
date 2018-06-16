@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
 
-        if(Build.VERSION.SDK_INT >= 23){
+        if (Build.VERSION.SDK_INT >= 23) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     Log.d("Bottom", "cross");
                     return true;
                 case R.id.navigation_cheer:
-                    Log.d("Bottom", "cheer");
                     return true;
             }
             return false;
@@ -88,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     public void checkPermission() {
         // 既に許可している
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         }
         // 拒否していた場合
-        else{
+        else {
             requestLocationPermission();
         }
         return;
