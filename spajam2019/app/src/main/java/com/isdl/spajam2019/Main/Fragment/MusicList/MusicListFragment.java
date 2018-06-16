@@ -92,9 +92,7 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
         musicListPresenter.getPossessedCrossMusic(2);
 
         ImageButton playButton = rv.findViewById(R.id.buttonPlay);
-        playButton.setOnClickListener(v -> {
-
-        });
+        
 
         return root;
     }
