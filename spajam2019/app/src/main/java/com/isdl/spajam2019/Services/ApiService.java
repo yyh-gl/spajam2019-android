@@ -29,6 +29,9 @@ public interface ApiService {
     @GET("users")
     Single<List<User>> getUser();
 
+    @GET("users/{id}")
+    Single<User> getUserInfo(@Path("id") int userId);
+
     @GET("musics/possessed/user/{id}")
     Single<List<Music>> getPossessedMusic(@Path("id") int userId);
 

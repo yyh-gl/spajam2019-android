@@ -8,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
+import com.isdl.spajam2019.Spajam2019Application;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +34,9 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    @Inject
+    ProfilePresenter profilePresenter;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -54,12 +62,19 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getActivity().getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        profilePresenter.getUserInfo(2);
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -73,6 +88,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    @Override
+    public void setUserInfo() {
+
     }
 
 

@@ -2,7 +2,6 @@ package com.isdl.spajam2019.Main.Fragment.Cross;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -15,11 +14,9 @@ import android.view.ViewGroup;
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.Models.Music;
-import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,7 +60,7 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        showLoadingDialog("","通信中");
+        showLoadingDialog("", "通信中");
 
         View root = inflater.inflate(R.layout.fragment_cross, container, false);
         context = root.getContext();
@@ -90,16 +87,6 @@ public class CrossFragment extends Fragment implements CrossContract.View {
         super.onAttach(context);
     }
 
-    public List<User> createDataset() {
-        List<User> dataset = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            User user = new User();
-            user.setName("カサレアル　太郎" + i + "号");
-
-            dataset.add(user);
-        }
-        return dataset;
-    }
 
     public void showLoadingDialog(final String title, final String message) {
         handler.post(() -> {
@@ -111,7 +98,7 @@ public class CrossFragment extends Fragment implements CrossContract.View {
         });
     }
 
-    public void dismissLoadingDialog(){
+    public void dismissLoadingDialog() {
         progressDialog.dismiss();
     }
 }
