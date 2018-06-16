@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 
 import java.util.List;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListViewHolder> {
-    private List<User> musics;
+    private List<Music> musics;
 
-    public MusicListAdapter(List<User> musics) {
+    public MusicListAdapter(List<Music> musics) {
         this.musics = musics;
     }
 
