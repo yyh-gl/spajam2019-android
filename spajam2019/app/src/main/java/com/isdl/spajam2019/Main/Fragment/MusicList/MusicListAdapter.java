@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import com.isdl.spajam2019.R;
 
 import java.util.List;
 
-public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MusicListViewHolder>{
+public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MusicListViewHolder> {
     private List<Music> musics;
     private static MusicListAdapter.OnItemClickListener listener;
 
@@ -40,7 +39,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
 
     @Override
     public void onBindViewHolder(MusicListViewHolder holder, int position) {
-        holder.artistNameTextView.setText(musics.get(position).getName());
+        holder.artistNameTextView.setText(musics.get(position).getArtist());
         holder.musicTitleView.setText(musics.get(position).getName());
     }
 
@@ -49,7 +48,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
         return musics.size();
     }
 
-    static class MusicListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    static class MusicListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView artistNameTextView;
         public TextView musicTitleView;
         public ImageButton musicPlayButton;

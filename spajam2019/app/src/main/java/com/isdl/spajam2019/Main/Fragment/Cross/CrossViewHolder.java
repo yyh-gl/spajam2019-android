@@ -8,9 +8,11 @@ import com.isdl.spajam2019.R;
 
 public class CrossViewHolder extends RecyclerView.ViewHolder {
     public TextView musicTitleView;
+    public TextView artistNameTextView;
 
     public CrossViewHolder(View itemView) {
         super(itemView);
         musicTitleView = (TextView) itemView.findViewById(R.id.musicTitle);
+        artistNameTextView = (TextView) itemView.findViewById(R.id.artistName);
     }
 }
