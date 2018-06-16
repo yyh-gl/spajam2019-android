@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -63,6 +64,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         crossFragment = CrossFragment.newInstance();
         cheeerFragment = CheerFragment.newInstance();
 
+        //Fragment作成
+        if(cheeerFragment == null) cheeerFragment = CheerFragment.newInstance();
+        if(crossFragment == null) crossFragment = CrossFragment.newInstance();
+        if(musicListFragment == null) {
+            musicListFragment = MusicListFragment.newInstance();
+        }
+        if(profileFragment == null) {
+            profileFragment = ProfileFragment.newInstance();
+            openFragment(getSupportFragmentManager(),profileFragment);
+        }
 
         if (Build.VERSION.SDK_INT >= 23) {
             handler.post(new Runnable() {
@@ -134,9 +145,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     public static void openFragment(FragmentManager fragmentManager, Fragment fragment) {
-
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container, fragment);
+        transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 }
