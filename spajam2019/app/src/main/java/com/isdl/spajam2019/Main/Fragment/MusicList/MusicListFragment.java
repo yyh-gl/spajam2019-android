@@ -43,13 +43,8 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
      * @return A new instance of fragment MusicListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MusicListFragment newInstance(String param1, String param2) {
-        MusicListFragment fragment = new MusicListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static MusicListFragment newInstance() {
+        return new MusicListFragment();
     }
 
     @Override

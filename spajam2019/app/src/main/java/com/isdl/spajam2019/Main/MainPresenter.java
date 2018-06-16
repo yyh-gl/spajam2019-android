@@ -96,6 +96,5 @@ public class MainPresenter {
         activity.startActivity(intent);
     }
 
-
 }
 
