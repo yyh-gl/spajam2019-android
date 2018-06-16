@@ -4,10 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.isdl.spajam2019.Models.Music;
-import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.Services.ApiService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,20 +26,8 @@ public class CrossPresenter implements CrossContract.Presenter {
         this.view = view;
     }
 
-    @Override
-    public List<User> createDataset() {
-        List<User> dataset = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            User user = new User();
-            user.setName("カサレアル　太郎" + i + "号");
-
-            dataset.add(user);
-        }
-        return dataset;
-    }
 
     public void getPossessedCrossMusic(int userid) {
-        List<Music> dataset = new ArrayList<>();
         apiService.getPossessedMusic(userid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
