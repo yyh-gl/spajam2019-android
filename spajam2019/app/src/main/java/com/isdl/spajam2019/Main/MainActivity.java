@@ -175,14 +175,23 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 // 検出したビーコンの情報を全部Logに書き出す
                 for (Beacon beacon : beacons) {
                     Boolean userFlag = false;//すれ違ったかどうかを判断する
-                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3());
+                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3()+", RSSI:"+beacon.getRssi());
                     for(int i=0;i<crossedUser.crossedUser.size();i++){
                         if(Integer.parseInt(beacon.getId3().toString()) == crossedUser.crossedUser.get(i)){
                             userFlag = true;
                         }
                     }
                     if(userFlag == false){
-                        //すれ違ったapiをたたく
+                        if (beacon.getRssi() >= -50){
+                            handler.post(() -> {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "すれ違いました", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    });
+                            crossedUser.crossedUser.add(beacon.getId3().toInt());
+
+                            //すれ違ったapiをたたく
+
+                        }
                     }
                     userFlag = false;
                 }
@@ -192,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Beacon beacon = new Beacon.Builder()
                 .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 .setId2("1")
-                .setId3("2")
+                .setId3("3")
                 .setManufacturer(0x004C)
                 .build();
         BeaconParser beaconParser = new BeaconParser()
