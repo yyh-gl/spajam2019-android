@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
+import com.isdl.spajam2019.Spajam2019Application;
 
 import javax.inject.Inject;
 
@@ -59,13 +63,38 @@ public class CrossFragment extends Fragment implements CrossContract.View {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getActivity().getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cross, container, false);
+        View root = inflater.inflate(R.layout.fragment_cross, container, false);
+
+
+        RecyclerView rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
+
+        CrossAdapter adapter = new CrossAdapter(crossPresenter.createDataset());
+
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+
+        rv.setHasFixedSize(true);
+
+//        rv.setLayoutManager(llm);
+
+        rv.setAdapter(adapter);
+
+        return root;
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
