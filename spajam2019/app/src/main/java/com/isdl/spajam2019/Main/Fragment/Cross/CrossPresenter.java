@@ -48,7 +48,7 @@ public class CrossPresenter implements CrossContract.Presenter {
                 .subscribe(new DisposableSingleObserver<List<Music>>() {
                     @Override
                     public void onSuccess(List<Music> possessedMusics) {
-                        view.setDataList(possessedMusics);
+                        view.setAdapter(possessedMusics);
                     }
 
                     @Override

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class CrossFragment extends Fragment implements CrossContract.View {
 
     @Inject
     CrossPresenter crossPresenter;
+
+    CrossAdapter adapter;
 
     private List<Music> musicList;
 
@@ -92,7 +95,7 @@ public class CrossFragment extends Fragment implements CrossContract.View {
         RecyclerView rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
         crossPresenter.getPossessedCrossMusic(2);
 
-        CrossAdapter adapter = new CrossAdapter(musicList);
+//        CrossAdapter adapter = new CrossAdapter(musicList);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
@@ -108,8 +111,9 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     }
 
     @Override
-    public void setDataList(List<Music> possessedMusics) {
-        musicList = possessedMusics;
+    public void setAdapter(List<Music> possessedMusics) {
+        Log.d("CrossFragment", String.valueOf(possessedMusics.size()));
+        adapter = new CrossAdapter(possessedMusics);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
