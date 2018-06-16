@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CrossContract {
     interface View {
-        void setDataList(List<Music> possessedMusics);
+        void setAdapter(List<Music> possessedMusics);
 
     }
 
