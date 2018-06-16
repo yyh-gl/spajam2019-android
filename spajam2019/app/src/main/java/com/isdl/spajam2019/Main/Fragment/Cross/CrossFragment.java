@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
@@ -43,6 +44,8 @@ public class CrossFragment extends Fragment implements CrossContract.View {
 
     @Inject
     CrossPresenter crossPresenter;
+
+    private List<Music> musicList;
 
     public CrossFragment() {
         // Required empty public constructor
@@ -87,8 +90,9 @@ public class CrossFragment extends Fragment implements CrossContract.View {
 
 
         RecyclerView rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
+        crossPresenter.getPossessedCrossMusic(2);
 
-        CrossAdapter adapter = new CrossAdapter(crossPresenter.createDataset());
+        CrossAdapter adapter = new CrossAdapter(musicList);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
@@ -101,6 +105,11 @@ public class CrossFragment extends Fragment implements CrossContract.View {
         return root;
 
 
+    }
+
+    @Override
+    public void setDataList(List<Music> possessedMusics) {
+        musicList = possessedMusics;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
