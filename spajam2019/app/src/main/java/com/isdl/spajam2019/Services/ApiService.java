@@ -1,5 +1,6 @@
 package com.isdl.spajam2019.Services;
 
+import com.isdl.spajam2019.Models.Live;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.Models.UserCrossMusic;
@@ -42,6 +43,9 @@ public interface ApiService {
 
     @POST("musics/cross")
     Single<List<UserCrossMusic>> postCrossMusic(@Query("sender_id") int senderId, @Query("reciever_id") int recieverId);
+
+    @POST("lives/like/{live_id}")
+    Single<Live> postLike(@Path("live_id") int liveId);
 
     @POST("users")
     Completable postUser(@Body User user);
