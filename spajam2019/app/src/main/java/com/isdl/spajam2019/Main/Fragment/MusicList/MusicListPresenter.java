@@ -90,7 +90,7 @@ public class MusicListPresenter implements MusicListContract.Presenter {
         mediaPlayer = new MediaPlayer();
 
         //音楽ファイル名, あるいはパス
-        String filePath = "前前前世.mp3";
+        String filePath = "zenzenzense.mp3";
 
         // assetsから mp3 ファイルを読み込み
         try (AssetFileDescriptor afdescripter = activity.getAssets().openFd(filePath)) {
