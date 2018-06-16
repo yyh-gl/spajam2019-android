@@ -95,6 +95,7 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
                 break;
             case R.id.buttonStop:
                 musicListPresenter.audioStop();
+                break;
         }
     }
 
