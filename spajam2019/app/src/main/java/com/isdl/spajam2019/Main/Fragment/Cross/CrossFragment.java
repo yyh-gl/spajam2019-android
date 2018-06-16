@@ -7,9 +7,11 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
@@ -22,7 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class CrossFragment extends Fragment implements CrossContract.View {
+public class CrossFragment extends Fragment implements CrossContract.View,CrossAdapter.OnItemClickListener {
 
     @Inject
     CrossPresenter crossPresenter;
@@ -76,11 +78,37 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     @Override
     public void setAdapter(List<Music> possessedMusics) {
         adapter = new CrossAdapter(possessedMusics);
+        adapter.setOnItemClickListener(this);
         LinearLayoutManager llm = new LinearLayoutManager(context);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(llm);
         rv.setAdapter(adapter);
         dismissLoadingDialog();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (view.getId()) {
+            case R.id.buttonPlay:
+                Log.w("id", "" + position);
+                crossPresenter.audioPlay(getActivity(),position);
+                ImageButton playButton = view.findViewById(R.id.buttonPlay);
+                ImageButton stopButton = view.findViewById(R.id.buttonStop);
+                playButton.setVisibility(View.INVISIBLE);
+                stopButton.setVisibility(View.GONE);
+                break;
+            case R.id.buttonStop:
+                Log.w("id", "" + position);
+
+                crossPresenter.audioStop();
+                break;
+            case R.id.buttonAccept:
+                break;
+            case R.id.buttonDeny:
+                crossPresenter.deleteCrossMusic(position);
+                break;
+
+        }
     }
 
     @Override

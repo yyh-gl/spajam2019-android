@@ -8,6 +8,7 @@ import com.isdl.spajam2019.Main.Fragment.Cheer.CheerFragment;
 
 public interface MainContract {
     interface View {
+        void showToast(String message);
 
     }
 

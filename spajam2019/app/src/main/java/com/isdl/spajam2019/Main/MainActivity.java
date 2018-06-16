@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     static BeaconManager beaconManager;
     public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
     static final String BEACON_UUID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
-    private static final int userId = 2;
+    private static final int userId = 3;
 
     @Inject
     MainPresenter mainPresenter;
@@ -104,6 +105,23 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_start_live:
+                Log.d("mic", "mic clicked");
+                mainPresenter.switchLiveStatus(1);
+                break;
+        }
+        return true;
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -176,22 +194,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 // 検出したビーコンの情報を全部Logに書き出す
                 for (Beacon beacon : beacons) {
                     Boolean userFlag = false;//すれ違ったかどうかを判断する
-                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3()+", RSSI:"+beacon.getRssi());
-                    for(int i=0;i<crossedUser.crossedUser.size();i++){
-                        if(Integer.parseInt(beacon.getId3().toString()) == crossedUser.crossedUser.get(i)){
+                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", RSSI:" + beacon.getRssi());
+                    for (int i = 0; i < crossedUser.crossedUser.size(); i++) {
+                        if (Integer.parseInt(beacon.getId3().toString()) == crossedUser.crossedUser.get(i)) {
                             userFlag = true;
                         }
                     }
-                    if(userFlag == false){
-                        if (beacon.getRssi() >= -50){
+                    if (userFlag == false) {
+                        if (beacon.getRssi() >= -50) {
                             handler.post(() -> {
-                                        Toast toast = Toast.makeText(getApplicationContext(), "すれ違いました", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    });
+                                Toast toast = Toast.makeText(getApplicationContext(), "すれ違いました", Toast.LENGTH_SHORT);
+                                toast.show();
+                            });
                             crossedUser.crossedUser.add(beacon.getId3().toInt());
 
                             //すれ違ったapiをたたく
-                            mainPresenter.postCrossMusic(userId,beacon.getId3().toInt());
+                            mainPresenter.postCrossMusic(beacon.getId3().toInt(),userId);
                         }
                     }
                     userFlag = false;
@@ -202,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Beacon beacon = new Beacon.Builder()
                 .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 .setId2("1")
-                .setId3(""+userId)
+                .setId3("" + userId)
                 .setManufacturer(0x004C)
                 .build();
         BeaconParser beaconParser = new BeaconParser()
@@ -267,5 +285,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     public static int getUserId() {
         return userId;
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

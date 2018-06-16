@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Live {
 
-    @SerializedName("like")
-    @Expose
-    private Integer like;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -20,6 +17,9 @@ public class Live {
     @SerializedName("date")
     @Expose
     private Object date;
+    @SerializedName("like")
+    @Expose
+    private Integer like;
     @SerializedName("location")
     @Expose
     private Object location;
@@ -38,14 +38,9 @@ public class Live {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-
-    public Integer getLike() {
-        return like;
-    }
-
-    public void setLike(Integer like) {
-        this.like = like;
-    }
+    @SerializedName("open")
+    @Expose
+    private Boolean open;
 
     public Integer getId() {
         return id;
@@ -77,6 +72,14 @@ public class Live {
 
     public void setDate(Object date) {
         this.date = date;
+    }
+
+    public Integer getLike() {
+        return like;
+    }
+
+    public void setLike(Integer like) {
+        this.like = like;
     }
 
     public Object getLocation() {
@@ -125,6 +128,14 @@ public class Live {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
     }
 
 }

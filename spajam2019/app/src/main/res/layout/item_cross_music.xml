@@ -18,7 +18,7 @@
             android:id="@+id/buttonStop"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:visibility="gone"
+            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonDeny"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,10 +48,11 @@
             android:id="@+id/buttonPlay"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:visibility="visible"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonDeny"
+            app:layout_constraintEnd_toStartOf="@+id/buttonStop"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <TextView

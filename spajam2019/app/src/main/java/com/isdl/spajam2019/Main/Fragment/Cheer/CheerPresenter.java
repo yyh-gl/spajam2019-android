@@ -24,6 +24,27 @@ public class CheerPresenter implements CheerContract.Presenter {
         this.view = view;
     }
 
+    public void getLiveInfo(int liveId) {
+        apiService.getLiveInfo(liveId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<Live>() {
+                    @Override
+                    public void onSuccess(Live live) {
+                        if (live.getOpen()) {
+                            view.showOtaku();
+                        } else {
+                            view.hideOtaku();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("test", e.toString());
+                    }
+                });
+    }
+
     public void postLikes(int liveId) {
         apiService.postLike(liveId)
                 .subscribeOn(Schedulers.io())
@@ -33,6 +54,7 @@ public class CheerPresenter implements CheerContract.Presenter {
                     public void onSuccess(Live live) {
                         Log.d("onSuccess", live.getLike().toString());
                         //ここでlive.getLike()の数に応じてviewの画像変更等を行う
+                        if (live.getOpen() == true) view.changeBackgroundColor(live.getLike());
                     }
 
                     @Override
