@@ -29,7 +29,6 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
         void onItemClick(View view, int position);
     }
 
-
     @Override
     public MusicListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_music, parent, false);

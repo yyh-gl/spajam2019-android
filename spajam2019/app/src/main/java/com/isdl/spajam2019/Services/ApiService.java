@@ -56,6 +56,6 @@ public interface ApiService {
     // 他に API があればここに並べる
 
     @DELETE("musics/cross")
-    Single<Live> postLike(@Path("live_id") int liveId);
+    Completable deleteCrossMusic(@Query("user_cross_music_id") int userCrossMusicId);
 
 }
