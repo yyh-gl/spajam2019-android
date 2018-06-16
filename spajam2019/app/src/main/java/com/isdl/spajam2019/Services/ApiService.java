@@ -1,5 +1,6 @@
 package com.isdl.spajam2019.Services;
 
+import com.isdl.spajam2019.Models.CrossMusic;
 import com.isdl.spajam2019.Models.Live;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Models.User;
@@ -40,7 +41,7 @@ public interface ApiService {
     Single<List<Music>> getPossessedMusic(@Path("id") int userId);
 
     @GET("musics/cross/{id}")
-    Single<List<Music>> getCrossMusic(@Path("id") int userId);
+    Single<List<CrossMusic>> getCrossMusic(@Path("id") int userId);
 
     @GET("musics/uploaded/user/{id}")
     Single<List<Music>> getUploadedMusic(@Path("id") int userId);
@@ -57,10 +58,12 @@ public interface ApiService {
     @POST("lives/switch/{live_id}")
     Single<Boolean> switchLiveStatus(@Path("live_id") int liveId);
 
-
     @POST("users")
     Completable postUser(@Body User user);
     // 他に API があればここに並べる
+
+    @POST("musics/cross/user")
+    Completable acceptCrossMusic(@Query("user_id") int userId,@Query("user_cross_music_id") int userCrossMusicId);
 
     @DELETE("musics/cross")
     Completable deleteCrossMusic(@Query("user_cross_music_id") int userCrossMusicId);
