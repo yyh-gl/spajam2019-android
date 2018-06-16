@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.Main.MainActivity;
+import com.isdl.spajam2019.Models.CrossMusic;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
@@ -76,7 +77,7 @@ public class CrossFragment extends Fragment implements CrossContract.View,CrossA
     }
 
     @Override
-    public void setAdapter(List<Music> possessedMusics) {
+    public void setAdapter(List<CrossMusic> possessedMusics) {
         adapter = new CrossAdapter(possessedMusics);
         adapter.setOnItemClickListener(this);
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -90,19 +91,13 @@ public class CrossFragment extends Fragment implements CrossContract.View,CrossA
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.buttonPlay:
-                Log.w("id", "" + position);
                 crossPresenter.audioPlay(getActivity(),position);
-                ImageButton playButton = view.findViewById(R.id.buttonPlay);
-                ImageButton stopButton = view.findViewById(R.id.buttonStop);
-                playButton.setVisibility(View.INVISIBLE);
-                stopButton.setVisibility(View.GONE);
                 break;
             case R.id.buttonStop:
-                Log.w("id", "" + position);
-
                 crossPresenter.audioStop();
                 break;
             case R.id.buttonAccept:
+                crossPresenter.acceptCrossMusic(position);
                 break;
             case R.id.buttonDeny:
                 crossPresenter.deleteCrossMusic(position);

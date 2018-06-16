@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.isdl.spajam2019.Models.CrossMusic;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 
 import java.util.List;
 
 public class CrossAdapter extends RecyclerView.Adapter<CrossAdapter.CrossViewHolder> {
-    private List<Music> crossMusics;
+    private List<CrossMusic> crossMusics;
     private static CrossAdapter.OnItemClickListener listener;
 
-    public CrossAdapter(List<Music> crossMusics) {
+    public CrossAdapter(List<CrossMusic> crossMusics) {
         this.crossMusics = crossMusics;
     }
 
