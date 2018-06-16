@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Main.Fragment.Cross.CrossAdapter;
+import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +43,10 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
 
     @Inject
     MusicListPresenter musicListPresenter;
+
+    RecyclerView rv;
+    CrossAdapter adapter;
+    Context context;
 
     public MusicListFragment() {
         // Required empty public constructor
@@ -77,12 +85,18 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_music_list, container, false);
-        Context context = root.getContext();
+        context = root.getContext();
 
 
-        RecyclerView rv = (RecyclerView) root.findViewById(R.id.musicListRecyclerView);
+        rv = (RecyclerView) root.findViewById(R.id.musicListRecyclerView);
+        musicListPresenter.getPossessedCrossMusic(1);
 
-        MusicListAdapter adapter = new MusicListAdapter(musicListPresenter.createDataset());
+        return root;
+    }
+
+    @Override
+    public void setAdapter(List<Music> possessedMusics) {
+        adapter = new CrossAdapter(possessedMusics);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
 
@@ -91,8 +105,6 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
         rv.setLayoutManager(llm);
 
         rv.setAdapter(adapter);
-
-        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

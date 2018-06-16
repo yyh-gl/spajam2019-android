@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,16 +96,6 @@ public class CrossFragment extends Fragment implements CrossContract.View {
         rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
         crossPresenter.getPossessedCrossMusic(2);
 
-//        CrossAdapter adapter = new CrossAdapter(musicList);
-
-//        LinearLayoutManager llm = new LinearLayoutManager(context);
-//
-//        rv.setHasFixedSize(true);
-//
-//        rv.setLayoutManager(llm);
-
-//        rv.setAdapter(adapter);
-
         return root;
 
 
@@ -114,7 +103,6 @@ public class CrossFragment extends Fragment implements CrossContract.View {
 
     @Override
     public void setAdapter(List<Music> possessedMusics) {
-        Log.d("CrossFragment", String.valueOf(possessedMusics.size()));
         adapter = new CrossAdapter(possessedMusics);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
