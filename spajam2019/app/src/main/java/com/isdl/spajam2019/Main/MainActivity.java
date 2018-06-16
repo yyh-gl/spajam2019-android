@@ -286,4 +286,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public static int getUserId() {
         return userId;
     }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 }

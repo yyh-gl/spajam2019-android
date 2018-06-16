@@ -44,6 +44,9 @@ public interface ApiService {
     @GET("musics/uploaded/user/{id}")
     Single<List<Music>> getUploadedMusic(@Path("id") int userId);
 
+    @GET("lives/{live_id}")
+    Single<Live> getLiveInfo(@Path("live_id") int liveId);
+
     @POST("musics/cross")
     Single<List<UserCrossMusic>> postCrossMusic(@Query("sender_id") int senderId, @Query("reciever_id") int recieverId);
 
