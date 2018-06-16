@@ -1,6 +1,7 @@
 package com.isdl.spajam2019.Main.Fragment.MusicList;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
@@ -47,6 +47,7 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
     RecyclerView rv;
     MusicListAdapter adapter;
     Context context;
+    MediaPlayer mediaPlayer;
 
     public MusicListFragment() {
         // Required empty public constructor
@@ -90,12 +91,12 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
 
         rv = (RecyclerView) root.findViewById(R.id.musicListRecyclerView);
         musicListPresenter.getPossessedCrossMusic(2);
+//        musicListPresenter.audioPlay(getActivity());
 
-        ImageButton playButton = rv.findViewById(R.id.buttonPlay);
-        
 
         return root;
     }
+
 
     @Override
     public void setAdapter(List<Music> possessedMusics) {
