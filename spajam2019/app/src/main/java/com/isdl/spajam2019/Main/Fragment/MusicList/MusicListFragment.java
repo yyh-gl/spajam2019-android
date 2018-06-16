@@ -91,8 +91,10 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.buttonPlay:
-                Log.w("id", "" + position);
-                //musicListPresenter.audioPlay(getActivity());
+                musicListPresenter.audioPlay(getActivity(),position);
+                break;
+            case R.id.buttonStop:
+                musicListPresenter.audioStop();
                 break;
         }
     }

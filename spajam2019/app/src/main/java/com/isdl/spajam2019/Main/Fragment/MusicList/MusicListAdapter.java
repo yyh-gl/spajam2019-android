@@ -63,11 +63,24 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
             musicPlayButton.setOnClickListener(this);
             musicStopButton.setOnClickListener(this);
 
+            musicStopButton.setEnabled(false);
         }
 
         @Override
         public void onClick(View v) {
             if (listener != null) {
+                switch (v.getId()) {
+                    case R.id.buttonPlay:
+                        musicPlayButton.setEnabled(false);
+                        musicStopButton.setEnabled(true);
+                        break;
+                    case R.id.buttonStop:
+                        musicPlayButton.setEnabled(true);
+                        musicStopButton.setEnabled(false);
+                        break;
+                }
+
+
                 listener.onItemClick(v, getLayoutPosition());
             }
         }

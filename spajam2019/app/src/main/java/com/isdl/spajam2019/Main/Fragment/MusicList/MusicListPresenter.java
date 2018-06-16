@@ -12,6 +12,7 @@ import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Services.ApiService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +26,8 @@ public class MusicListPresenter implements MusicListContract.Presenter {
     ApiService apiService;
     MusicListContract.View view;
     MediaPlayer mediaPlayer;
+
+    private ArrayList<Integer> musicIdList = new ArrayList<Integer>();
 
     @Inject
     public MusicListPresenter(Application app, ApiService apiService, MusicListContract.View view) {
@@ -41,6 +44,10 @@ public class MusicListPresenter implements MusicListContract.Presenter {
                 .subscribe(new DisposableSingleObserver<List<Music>>() {
                     @Override
                     public void onSuccess(List<Music> possessedMusics) {
+                        musicIdList = new ArrayList<Integer>();
+                        for(int i=0;i<possessedMusics.size();i++){
+                            musicIdList.add(possessedMusics.get(i).getId());
+                        }
                         view.setAdapter(possessedMusics);
                     }
 
@@ -52,10 +59,10 @@ public class MusicListPresenter implements MusicListContract.Presenter {
     }
 
     @Override
-    public void audioPlay(Activity activity) {
+    public void audioPlay(Activity activity,int positon) {
         if (mediaPlayer == null) {
             // audio ファイルを読出し
-            if (audioSetup(activity)) {
+            if (audioSetup(activity,positon)) {
                 Toast.makeText(activity.getApplication(), "Rread audio file", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(activity.getApplication(), "Error: read audio file", Toast.LENGTH_SHORT).show();
@@ -83,14 +90,14 @@ public class MusicListPresenter implements MusicListContract.Presenter {
 
     }
 
-    private boolean audioSetup(Activity activity) {
+    private boolean audioSetup(Activity activity,int position) {
         boolean fileCheck = false;
 
         // インタンスを生成
         mediaPlayer = new MediaPlayer();
 
         //音楽ファイル名, あるいはパス
-        String filePath = "zenzenzense.mp3";
+        String filePath = musicIdList.get(position)+".mp3";
 
         // assetsから mp3 ファイルを読み込み
         try (AssetFileDescriptor afdescripter = activity.getAssets().openFd(filePath)) {

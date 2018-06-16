@@ -14,7 +14,7 @@ public interface MusicListContract {
     interface Presenter {
         void getPossessedCrossMusic(int userid);
 
-        void audioPlay(Activity activity);
+        void audioPlay(Activity activity,int position);
 
         void audioStop();
     }
