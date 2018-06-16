@@ -33,6 +33,7 @@ public class CheerPresenter implements CheerContract.Presenter {
                     public void onSuccess(Live live) {
                         Log.d("onSuccess", live.getLike().toString());
                         //ここでlive.getLike()の数に応じてviewの画像変更等を行う
+                        view.changeBackgroundColor(live.getLike());
                     }
 
                     @Override
