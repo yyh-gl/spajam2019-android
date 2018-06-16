@@ -1,8 +1,11 @@
 package com.isdl.spajam2019.Main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.view.MenuItem;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
@@ -16,7 +19,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Inject
     MainPresenter mainPresenter;
 
+    ActionBar toolBar;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -28,20 +34,29 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 .build()
                 .inject(this);
 
-        mainPresenter.apiRequest();
-        mainPresenter.apiPost();
-
-        Button buttonRecycler = findViewById(R.id.toRecycler);
-        Button buttonGps = findViewById(R.id.toGps);
-        Button buttonCamera = findViewById(R.id.toCamera);
-
-        buttonRecycler.setOnClickListener(view -> mainPresenter.toRecycler(this));
-        buttonGps.setOnClickListener(view -> mainPresenter.toGps(this));
-        buttonCamera.setOnClickListener(view -> mainPresenter.toCamera(this));
-
+        toolBar = getSupportActionBar();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_profile:
+                    return true;
+                case R.id.navigation_music_list:
+                    return true;
+                case R.id.navigation_cross:
+                    return true;
+                case R.id.navigation_cheer:
+                    return true;
+            }
+            return false;
+        }
+    };
+
     @Override
+
     protected void onResume() {
         super.onResume();
     }
