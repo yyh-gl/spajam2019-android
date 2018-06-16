@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -59,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         toolBar = getSupportActionBar();
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        profileFragment = ProfileFragment.newInstance();
+        musicListFragment = MusicListFragment.newInstance();
+        crossFragment = CrossFragment.newInstance();
+        cheeerFragment = CheerFragment.newInstance();
 
 
         if (Build.VERSION.SDK_INT >= 23) {
@@ -76,20 +79,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
-                    profileFragment = ProfileFragment.newInstance();
-                    openFragment(getSupportFragmentManager(),profileFragment);
+                    openFragment(getSupportFragmentManager(), profileFragment);
                     return true;
                 case R.id.navigation_music_list:
-                    musicListFragment = MusicListFragment.newInstance();
-                    openFragment(getSupportFragmentManager(),musicListFragment);
+                    openFragment(getSupportFragmentManager(), musicListFragment);
                     return true;
                 case R.id.navigation_cross:
-                    crossFragment = CrossFragment.newInstance();
-                    openFragment(getSupportFragmentManager(),crossFragment);
+                    openFragment(getSupportFragmentManager(), crossFragment);
                     return true;
                 case R.id.navigation_cheer:
-                    cheeerFragment = CheerFragment.newInstance();
-                    openFragment(getSupportFragmentManager(),cheeerFragment);
+                    openFragment(getSupportFragmentManager(), cheeerFragment);
                     return true;
             }
             return false;
@@ -133,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         }
     }
-    public static void openFragment (FragmentManager fragmentManager, Fragment fragment) {
+
+    public static void openFragment(FragmentManager fragmentManager, Fragment fragment) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.container, fragment);
