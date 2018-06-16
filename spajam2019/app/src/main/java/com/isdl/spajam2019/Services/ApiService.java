@@ -50,6 +50,10 @@ public interface ApiService {
     @POST("lives/like/{live_id}")
     Single<Live> postLike(@Path("live_id") int liveId);
 
+    @POST("lives/switch/{live_id}")
+    Single<Boolean> switchLiveStatus(@Path("live_id") int liveId);
+
+
     @POST("users")
     Completable postUser(@Body User user);
     // 他に API があればここに並べる

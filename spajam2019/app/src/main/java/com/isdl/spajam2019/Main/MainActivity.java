@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         switch (item.getItemId()) {
             case R.id.action_start_live:
                 Log.d("mic", "mic clicked");
+                mainPresenter.switchLiveStatus(1);
                 break;
         }
         return true;

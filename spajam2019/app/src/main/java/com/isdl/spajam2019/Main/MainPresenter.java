@@ -57,6 +57,24 @@ public class MainPresenter {
 
     }
 
+    public void switchLiveStatus(int liveId) {
+        apiService.switchLiveStatus(liveId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean liveStatus) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("test", e.toString());
+                    }
+                });
+
+    }
+
 
     public void toGps(Activity activity) {
         Intent intent = new Intent(activity, GpsPermissionActivity.class);
