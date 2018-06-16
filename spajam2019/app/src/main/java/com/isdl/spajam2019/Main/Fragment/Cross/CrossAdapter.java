@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 
 import java.util.List;
 
 public class CrossAdapter extends RecyclerView.Adapter<CrossViewHolder> {
-    private List<User> crossMusics;
+    private List<Music> crossMusics;
 
-    public CrossAdapter(List<User> crossMusics) {
+    public CrossAdapter(List<Music> crossMusics) {
         this.crossMusics = crossMusics;
     }
 

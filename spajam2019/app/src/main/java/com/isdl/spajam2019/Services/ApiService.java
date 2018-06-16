@@ -1,5 +1,6 @@
 package com.isdl.spajam2019.Services;
 
+import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Models.User;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * [@GET]，[@POST]等でリクエスト種別を変更
@@ -26,6 +28,12 @@ public interface ApiService {
 
     @GET("users")
     Single<List<User>> getUser();
+
+    @GET("musics/possessed/user/{id}")
+    Single<List<Music>> getPossessedMusic(@Path("id") int userId);
+
+    @GET("musics/uploaded/user/{id}")
+    Single<List<Music>> getUploadedMusic(@Path("id") int userId);
 
     @POST("users")
     Completable postUser(@Body User user);

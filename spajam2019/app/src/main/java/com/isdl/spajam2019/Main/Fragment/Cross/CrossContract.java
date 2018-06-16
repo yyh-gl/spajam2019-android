@@ -1,16 +1,17 @@
 package com.isdl.spajam2019.Main.Fragment.Cross;
 
-import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Models.Music;
 
 import java.util.List;
 
 public interface CrossContract {
     interface View {
+        void setAdapter(List<Music> possessedMusics);
 
     }
 
     interface Presenter {
-        List<User> createDataset();
+        void getPossessedCrossMusic(int userid);
 
     }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.DataBase.CrossedUser;
 import com.isdl.spajam2019.Main.Fragment.Cheer.CheerFragment;
 import com.isdl.spajam2019.Main.Fragment.Cross.CrossFragment;
 import com.isdl.spajam2019.Main.Fragment.MusicList.MusicListFragment;
@@ -43,10 +44,11 @@ import javax.inject.Inject;
 
 import static org.altbeacon.beacon.service.BeaconService.TAG;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View,BeaconConsumer {
+public class MainActivity extends AppCompatActivity implements MainContract.View, BeaconConsumer {
 
     private final int REQUEST_PERMISSION = 1000;
     private Handler handler = new Handler();
+    private CrossedUser crossedUser = new CrossedUser();
 
     private CheerFragment cheeerFragment;
     private CrossFragment crossFragment;
@@ -80,15 +82,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
         //Fragment作成
-        if(cheeerFragment == null) cheeerFragment = CheerFragment.newInstance();
-        if(crossFragment == null) crossFragment = CrossFragment.newInstance();
-        if(musicListFragment == null) {
+        if (cheeerFragment == null) cheeerFragment = CheerFragment.newInstance();
+        if (crossFragment == null) crossFragment = CrossFragment.newInstance();
+        if (profileFragment == null) profileFragment = ProfileFragment.newInstance();
+        if (musicListFragment == null) {
             musicListFragment = MusicListFragment.newInstance();
+            openFragment(getSupportFragmentManager(), musicListFragment);
         }
-        if(profileFragment == null) {
-            profileFragment = ProfileFragment.newInstance();
-            openFragment(getSupportFragmentManager(),profileFragment);
-        }
+
 
         //Beaconに必要な設定
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onResume();
         beaconManager.bind(this);
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -163,16 +165,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         try {
             beaconManager.startMonitoringBeaconsInRegion(new Region("SPAJAM2018", Identifier.parse(BEACON_UUID), null, null));
-        }catch (RemoteException e) {}
+        } catch (RemoteException e) {
+        }
 
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                Log.i(TAG, "didRangingBeacons");
                 // 検出したビーコンの情報を全部Logに書き出す
                 for (Beacon beacon : beacons) {
-                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", Distance:" + beacon.getDistance());
+                    Boolean userFlag = false;//すれ違ったかどうかを判断する
+                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3());
+                    for(int i=0;i<crossedUser.crossedUser.size();i++){
+                        if(Integer.parseInt(beacon.getId3().toString()) == crossedUser.crossedUser.get(i)){
+                            userFlag = true;
+                        }
+                    }
+                    if(userFlag == false){
+                        //すれ違ったapiをたたく
+                    }
+                    userFlag = false;
                 }
             }
         });
@@ -180,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Beacon beacon = new Beacon.Builder()
                 .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 .setId2("1")
-                .setId3("80")
+                .setId3("2")
                 .setManufacturer(0x004C)
                 .build();
         BeaconParser beaconParser = new BeaconParser()
@@ -191,16 +203,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         beaconTransmitter.startAdvertising(beacon);
 
     }
-    public void stopMonitoringBeaconsInRegion(){   //ビーコンの監視を止める
+
+    public void stopMonitoringBeaconsInRegion() {   //ビーコンの監視を止める
         try {
             beaconManager.stopRangingBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
             System.out.println("レンジング終了");
-        } catch (RemoteException e) {}
+        } catch (RemoteException e) {
+        }
 
         try {
             beaconManager.stopMonitoringBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
             System.out.println("領域監視終了");
-        } catch (RemoteException e) {}
+        } catch (RemoteException e) {
+        }
     }
 
     public void checkPermission() {
