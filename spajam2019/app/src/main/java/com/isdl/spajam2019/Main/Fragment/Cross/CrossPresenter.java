@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.isdl.spajam2019.Main.MainActivity;
+import com.isdl.spajam2019.Models.CrossMusic;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.Services.ApiService;
 
@@ -28,7 +30,9 @@ public class CrossPresenter implements CrossContract.Presenter {
     ApiService apiService;
     CrossContract.View view;
     MediaPlayer mediaPlayer;
+    private ArrayList<Integer> crossMusicIdList = new ArrayList<Integer>();
     private ArrayList<Integer> musicIdList = new ArrayList<Integer>();
+
 
     @Inject
     public CrossPresenter(Application app, ApiService apiService, CrossContract.View view) {
@@ -42,12 +46,14 @@ public class CrossPresenter implements CrossContract.Presenter {
         apiService.getCrossMusic(userid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<List<Music>>() {
+                .subscribe(new DisposableSingleObserver<List<CrossMusic>>() {
                     @Override
-                    public void onSuccess(List<Music> crossMusics) {
+                    public void onSuccess(List<CrossMusic> crossMusics) {
                         musicIdList = new ArrayList<Integer>();
+                        crossMusicIdList = new ArrayList<Integer>();
                         for(int i=0;i<crossMusics.size();i++){
                             musicIdList.add(crossMusics.get(i).getId());
+                            crossMusicIdList.add(crossMusics.get(i).getUserCrossMusicId());
                         }
                         view.setAdapter(crossMusics);
                     }
@@ -130,7 +136,7 @@ public class CrossPresenter implements CrossContract.Presenter {
     }
 
     public void deleteCrossMusic(int position) {
-        apiService.deleteCrossMusic(musicIdList.get(position))
+        apiService.deleteCrossMusic(crossMusicIdList.get(position))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {
@@ -145,4 +151,22 @@ public class CrossPresenter implements CrossContract.Presenter {
                     }
                 });
     }
+
+    public void acceptCrossMusic(int position) {
+        apiService.acceptCrossMusic(MainActivity.getUserId(),crossMusicIdList.get(position))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("test", e.toString());
+                    }
+                });
+    }
+
 }
