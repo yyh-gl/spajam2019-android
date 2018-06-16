@@ -91,12 +91,7 @@ public class CrossFragment extends Fragment implements CrossContract.View,CrossA
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.buttonPlay:
-                Log.w("id", "" + position);
                 crossPresenter.audioPlay(getActivity(),position);
-                ImageButton playButton = view.findViewById(R.id.buttonPlay);
-                ImageButton stopButton = view.findViewById(R.id.buttonStop);
-                playButton.setClickable(false);
-                //stopButton.setClickable(true);
                 break;
             case R.id.buttonStop:
                 crossPresenter.audioStop();
