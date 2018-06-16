@@ -7,8 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
+import com.isdl.spajam2019.Spajam2019Application;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +35,11 @@ public class CheerFragment extends Fragment implements CheerContract.View {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    @Inject
+    CheerPresenter cheerPresenter;
+
+    private int like = 0;
 
     public CheerFragment() {
         // Required empty public constructor
@@ -54,13 +65,26 @@ public class CheerFragment extends Fragment implements CheerContract.View {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getActivity().getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cheer, container, false);
+        View root = inflater.inflate(R.layout.fragment_cheer, container, false);
+        ImageButton buttonCheer = (ImageButton) root.findViewById(R.id.buttonCheer);
+        buttonCheer.setOnClickListener(v -> {
+            cheerPresenter.postLikes(1);
+        });
+
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,7 +98,7 @@ public class CheerFragment extends Fragment implements CheerContract.View {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-    
+
 
     /**
      * This interface must be implemented by activities that contain this

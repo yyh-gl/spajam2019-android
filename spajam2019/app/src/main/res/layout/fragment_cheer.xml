@@ -7,19 +7,11 @@
     tools:context=".Main.Fragment.Cheer.CheerFragment">
 
     <ImageButton
-        android:id="@+id/buttonStartLive"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/microphone_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
         android:id="@+id/buttonCheer"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:padding="100dp"
         android:scaleType="fitXY"
         android:src="@drawable/cheer"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     static BeaconManager beaconManager;
     public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
     static final String BEACON_UUID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+    private static final int userId = 2;
 
     @Inject
     MainPresenter mainPresenter;
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                             crossedUser.crossedUser.add(beacon.getId3().toInt());
 
                             //すれ違ったapiをたたく
-                            mainPresenter.postCrossMusic(2,3);
+                            mainPresenter.postCrossMusic(userId,beacon.getId3().toInt());
                         }
                     }
                     userFlag = false;
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Beacon beacon = new Beacon.Builder()
                 .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 .setId2("1")
-                .setId3("3")
+                .setId3(""+userId)
                 .setManufacturer(0x004C)
                 .build();
         BeaconParser beaconParser = new BeaconParser()
@@ -262,5 +263,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
+    }
+
+    public static int getUserId() {
+        return userId;
     }
 }

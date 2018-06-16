@@ -26,6 +26,7 @@ public class CrossAdapter extends RecyclerView.Adapter<CrossViewHolder> {
 
     @Override
     public void onBindViewHolder(CrossViewHolder holder, int position) {
+        holder.artistNameTextView.setText((crossMusics.get(position).getArtist()));
         holder.musicTitleView.setText(crossMusics.get(position).getName());
 
     }

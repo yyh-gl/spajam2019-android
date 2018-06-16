@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Main.MainActivity;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
@@ -59,7 +60,7 @@ public class MusicListFragment extends Fragment implements MusicListContract.Vie
 
 
         rv = (RecyclerView) root.findViewById(R.id.musicListRecyclerView);
-        musicListPresenter.getPossessedCrossMusic(2);
+        musicListPresenter.getPossessedCrossMusic(MainActivity.getUserId());
         //musicListPresenter.audioPlay(getActivity());
 
 

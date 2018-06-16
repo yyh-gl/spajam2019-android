@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Main.MainActivity;
 import com.isdl.spajam2019.Models.Music;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
@@ -67,7 +68,7 @@ public class CrossFragment extends Fragment implements CrossContract.View {
 
 
         rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
-        crossPresenter.getPossessedCrossMusic(2);
+        crossPresenter.getPossessedCrossMusic(MainActivity.getUserId());
 
         return root;
     }
