@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/buttonStartLive"
-        android:layout_width="50"
-        android:layout_height="50"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="fitXY"
         android:src="@drawable/microphone_color"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,8 +17,8 @@
 
     <ImageButton
         android:id="@+id/buttonCheer"
-        android:layout_width="200"
-        android:layout_height="200"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginBottom="22dp"
         android:scaleType="fitXY"
         android:src="@drawable/cheer"
