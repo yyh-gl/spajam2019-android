@@ -8,6 +8,7 @@ import android.util.Log;
 import com.isdl.spajam2019.Camera.CameraPermissionActivity;
 import com.isdl.spajam2019.Gps.GpsPermissionActivity;
 import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Models.UserCrossMusic;
 import com.isdl.spajam2019.Recycler.RecyclerActivity;
 import com.isdl.spajam2019.Services.ApiService;
 
@@ -31,6 +32,23 @@ public class MainPresenter {
     @Inject
     public MainPresenter(ApiService apiService) {
         this.apiService = apiService;
+    }
+
+    public void postCrossMusic(int senderId,int recieverId){
+        apiService.postCrossMusic(senderId,recieverId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<List<UserCrossMusic>>() {
+                    @Override
+                    public void onSuccess(List<UserCrossMusic> possessedMusics) {
+                        Log.w("succsess","");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("test", e.toString());
+                    }
+                });
     }
 
     public void apiRequest() {
