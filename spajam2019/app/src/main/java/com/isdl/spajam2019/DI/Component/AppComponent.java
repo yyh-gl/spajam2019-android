@@ -1,9 +1,10 @@
 package com.isdl.spajam2019.DI.Component;
 
+import android.app.Application;
+
+import com.isdl.spajam2019.DI.Module.ApiModule;
 import com.isdl.spajam2019.DI.Module.AppModule;
-import com.isdl.spajam2019.DI.Module.InfraModule;
-import com.isdl.spajam2019.Main.MainActivity;
-import com.isdl.spajam2019.Recycler.RecyclerActivity;
+import com.isdl.spajam2019.Services.ApiService;
 
 import javax.inject.Singleton;
 
@@ -16,9 +17,10 @@ import dagger.Component;
 @Component(
         modules = {
                 AppModule.class,
-                InfraModule.class
+                ApiModule.class
         })
 public interface AppComponent {
-    void inject(MainActivity mainActivity);
-    void inject(RecyclerActivity recyclerActivity);
+    Application application();
+
+    ApiService apiService();
 }

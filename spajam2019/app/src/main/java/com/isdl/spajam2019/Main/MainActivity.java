@@ -2,13 +2,16 @@ package com.isdl.spajam2019.Main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
+import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
+import com.isdl.spajam2019.DI.Module.ActivityModule;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     @Inject
     MainPresenter mainPresenter;
@@ -18,15 +21,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((Spajam2019Application) getApplication()).getAppComponent().inject(this);
+        DaggerActivityComponent.builder()
+                .appComponent(((Spajam2019Application) getApplicationContext())
+                        .getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
+
+        mainPresenter.apiRequest();
+        mainPresenter.apiPost();
+
+        Button buttonRecycler = findViewById(R.id.toRecycler);
+        Button buttonGps = findViewById(R.id.toGps);
+        Button buttonCamera = findViewById(R.id.toCamera);
+
+        buttonRecycler.setOnClickListener(view -> mainPresenter.toRecycler(this));
+        buttonGps.setOnClickListener(view -> mainPresenter.toGps(this));
+        buttonCamera.setOnClickListener(view -> mainPresenter.toCamera(this));
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mainPresenter.apiRequest();
-        mainPresenter.apiPost();
-
     }
 
 }

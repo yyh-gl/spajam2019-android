@@ -1,9 +1,14 @@
 package com.isdl.spajam2019.Main;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
+import com.isdl.spajam2019.Camera.CameraPermissionActivity;
+import com.isdl.spajam2019.Gps.GpsPermissionActivity;
 import com.isdl.spajam2019.Models.User;
+import com.isdl.spajam2019.Recycler.RecyclerActivity;
 import com.isdl.spajam2019.Services.ApiService;
 
 import java.util.List;
@@ -72,6 +77,22 @@ public class MainPresenter {
                         Log.d("test", e.toString());
                     }
                 });
+    }
+
+    public void toGps(Activity activity) {
+        Intent intent = new Intent(activity, GpsPermissionActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void toRecycler(Activity activity) {
+        Intent intent = new Intent(activity, RecyclerActivity.class);
+        activity.startActivity(intent);
+
+    }
+
+    public void toCamera(Activity activity) {
+        Intent intent = new Intent(activity, CameraPermissionActivity.class);
+        activity.startActivity(intent);
     }
 
 

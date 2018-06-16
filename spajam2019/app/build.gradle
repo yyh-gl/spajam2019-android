@@ -43,4 +43,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
 }
