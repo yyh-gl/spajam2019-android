@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         toolBar = getSupportActionBar();
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,12 +45,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
+                    Log.d("Bottom", "profile");
                     return true;
                 case R.id.navigation_music_list:
+                    Log.d("Bottom", "musicList");
                     return true;
                 case R.id.navigation_cross:
+                    Log.d("Bottom", "cross");
                     return true;
                 case R.id.navigation_cheer:
+                    Log.d("Bottom", "cheer");
                     return true;
             }
             return false;
