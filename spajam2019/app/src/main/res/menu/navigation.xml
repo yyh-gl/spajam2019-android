@@ -13,7 +13,7 @@
     <item
         android:id="@+id/navigation_cheer"
         android:icon="@drawable/cheer"
-        android:title="" />
+        android:title="Cheer" />
 
     <item
         android:id="@+id/navigation_profile"
