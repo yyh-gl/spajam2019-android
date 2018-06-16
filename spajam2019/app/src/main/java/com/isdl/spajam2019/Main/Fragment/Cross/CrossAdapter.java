@@ -32,6 +32,6 @@ public class CrossAdapter extends RecyclerView.Adapter<CrossViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return crossMusics.size();
     }
 }

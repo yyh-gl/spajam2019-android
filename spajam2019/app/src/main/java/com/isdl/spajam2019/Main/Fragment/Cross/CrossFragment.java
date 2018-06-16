@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.view.ViewGroup;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Models.User;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -78,17 +83,18 @@ public class CrossFragment extends Fragment implements CrossContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cross, container, false);
+        Context context = root.getContext();
 
 
         RecyclerView rv = (RecyclerView) root.findViewById(R.id.crossRecyclerView);
 
         CrossAdapter adapter = new CrossAdapter(crossPresenter.createDataset());
 
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(context);
 
         rv.setHasFixedSize(true);
 
-//        rv.setLayoutManager(llm);
+        rv.setLayoutManager(llm);
 
         rv.setAdapter(adapter);
 
@@ -123,5 +129,16 @@ public class CrossFragment extends Fragment implements CrossContract.View {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public List<User> createDataset() {
+        List<User> dataset = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            User user = new User();
+            user.setName("カサレアル　太郎" + i + "号");
+
+            dataset.add(user);
+        }
+        return dataset;
     }
 }
