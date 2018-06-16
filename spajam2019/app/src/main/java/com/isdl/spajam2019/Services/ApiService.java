@@ -38,6 +38,9 @@ public interface ApiService {
     @GET("musics/possessed/user/{id}")
     Single<List<Music>> getPossessedMusic(@Path("id") int userId);
 
+    @GET("musics/cross/{id}")
+    Single<List<Music>> getCrossMusic(@Path("id") int userId);
+
     @GET("musics/uploaded/user/{id}")
     Single<List<Music>> getUploadedMusic(@Path("id") int userId);
 

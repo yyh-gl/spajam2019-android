@@ -28,13 +28,13 @@ public class CrossPresenter implements CrossContract.Presenter {
 
 
     public void getPossessedCrossMusic(int userid) {
-        apiService.getPossessedMusic(userid)
+        apiService.getCrossMusic(userid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<List<Music>>() {
                     @Override
-                    public void onSuccess(List<Music> possessedMusics) {
-                        view.setAdapter(possessedMusics);
+                    public void onSuccess(List<Music> crossMusics) {
+                        view.setAdapter(crossMusics);
                     }
 
                     @Override
