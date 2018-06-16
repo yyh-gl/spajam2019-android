@@ -79,6 +79,7 @@ public class MainPresenter {
                 });
     }
 
+
     public void toGps(Activity activity) {
         Intent intent = new Intent(activity, GpsPermissionActivity.class);
         activity.startActivity(intent);
@@ -94,7 +95,6 @@ public class MainPresenter {
         Intent intent = new Intent(activity, CameraPermissionActivity.class);
         activity.startActivity(intent);
     }
-
 
 }
 

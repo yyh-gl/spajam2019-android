@@ -1,22 +1,69 @@
 package com.isdl.spajam2019.Main;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.isdl.spajam2019.DI.Component.DaggerActivityComponent;
 import com.isdl.spajam2019.DI.Module.ActivityModule;
+import com.isdl.spajam2019.Main.Fragment.Cheer.CheerFragment;
+import com.isdl.spajam2019.Main.Fragment.Cross.CrossFragment;
+import com.isdl.spajam2019.Main.Fragment.MusicList.MusicListFragment;
+import com.isdl.spajam2019.Main.Fragment.Profile.ProfileFragment;
 import com.isdl.spajam2019.R;
 import com.isdl.spajam2019.Spajam2019Application;
 
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.BeaconTransmitter;
+import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
+
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+import static org.altbeacon.beacon.service.BeaconService.TAG;
+
+public class MainActivity extends AppCompatActivity implements MainContract.View,BeaconConsumer {
+
+    private final int REQUEST_PERMISSION = 1000;
+    private Handler handler = new Handler();
+
+    private CheerFragment cheeerFragment;
+    private CrossFragment crossFragment;
+    private MusicListFragment musicListFragment;
+    private ProfileFragment profileFragment;
+
+    static BeaconManager beaconManager;
+    public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
+    static final String BEACON_UUID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
 
     @Inject
     MainPresenter mainPresenter;
 
+    ActionBar toolBar;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -28,22 +75,168 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 .build()
                 .inject(this);
 
-        mainPresenter.apiRequest();
-        mainPresenter.apiPost();
+        toolBar = getSupportActionBar();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        Button buttonRecycler = findViewById(R.id.toRecycler);
-        Button buttonGps = findViewById(R.id.toGps);
-        Button buttonCamera = findViewById(R.id.toCamera);
+        //Fragment作成
+        if(cheeerFragment == null) cheeerFragment = CheerFragment.newInstance();
+        if(crossFragment == null) crossFragment = CrossFragment.newInstance();
+        if(musicListFragment == null) {
+            musicListFragment = MusicListFragment.newInstance();
+        }
+        if(profileFragment == null) {
+            profileFragment = ProfileFragment.newInstance();
+            openFragment(getSupportFragmentManager(),profileFragment);
+        }
 
-        buttonRecycler.setOnClickListener(view -> mainPresenter.toRecycler(this));
-        buttonGps.setOnClickListener(view -> mainPresenter.toGps(this));
-        buttonCamera.setOnClickListener(view -> mainPresenter.toCamera(this));
+        //Beaconに必要な設定
+        beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(IBEACON_FORMAT));
 
+        if (Build.VERSION.SDK_INT >= 23) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    checkPermission();
+                }
+            });
+        }
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_profile:
+                    openFragment(getSupportFragmentManager(), profileFragment);
+                    return true;
+                case R.id.navigation_music_list:
+                    openFragment(getSupportFragmentManager(), musicListFragment);
+                    return true;
+                case R.id.navigation_cross:
+                    openFragment(getSupportFragmentManager(), crossFragment);
+                    return true;
+                case R.id.navigation_cheer:
+                    openFragment(getSupportFragmentManager(), cheeerFragment);
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    @Override
+
+    protected void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onBeaconServiceConnect() {
+        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            @Override
+            public void didEnterRegion(Region region) {
+                try {
+                    beaconManager.startRangingBeaconsInRegion(region);
+                    System.out.println("レンジング開始");
+                } catch (RemoteException e) {
+                }
+                Log.i(TAG, "didEnterRegion");
+            }
+
+            @Override
+            public void didExitRegion(Region region) {
+                Log.i(TAG, "didExitRegion");
+            }
+
+            @Override
+            public void didDetermineStateForRegion(int state, Region region) {
+                Log.i(TAG, "I have just switched from seeing/not seeing beacons: " + state);
+            }
+        });
+
+        try {
+            beaconManager.startMonitoringBeaconsInRegion(new Region("SPAJAM2018", Identifier.parse(BEACON_UUID), null, null));
+        }catch (RemoteException e) {}
+
+
+        beaconManager.addRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                Log.i(TAG, "didRangingBeacons");
+                // 検出したビーコンの情報を全部Logに書き出す
+                for (Beacon beacon : beacons) {
+                    Log.d("MyActivity", "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", Distance:" + beacon.getDistance());
+                }
+            }
+        });
+
+        Beacon beacon = new Beacon.Builder()
+                .setId1("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+                .setId2("1")
+                .setId3("80")
+                .setManufacturer(0x004C)
+                .build();
+        BeaconParser beaconParser = new BeaconParser()
+                .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
+        BeaconTransmitter beaconTransmitter = new BeaconTransmitter(getApplicationContext(), beaconParser);
+
+        //送信開始
+        beaconTransmitter.startAdvertising(beacon);
+
+    }
+    public void stopMonitoringBeaconsInRegion(){   //ビーコンの監視を止める
+        try {
+            beaconManager.stopRangingBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
+            System.out.println("レンジング終了");
+        } catch (RemoteException e) {}
+
+        try {
+            beaconManager.stopMonitoringBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
+            System.out.println("領域監視終了");
+        } catch (RemoteException e) {}
     }
 
+    public void checkPermission() {
+        // 既に許可している
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        }
+        // 拒否していた場合
+        else {
+            requestLocationPermission();
+        }
+        return;
+    }
+
+    // 位置情報サービスの使用許可を求める
+    public void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,}, REQUEST_PERMISSION);
+    }
+
+    // 結果の受け取り
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION) {
+            // 使用が許可された
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                return;
+            } else {
+                // それでも拒否された時の対応
+                Toast toast = Toast.makeText(this, "これ以上なにもできません", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    }
+
+    public static void openFragment(FragmentManager fragmentManager, Fragment fragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
+    }
 }

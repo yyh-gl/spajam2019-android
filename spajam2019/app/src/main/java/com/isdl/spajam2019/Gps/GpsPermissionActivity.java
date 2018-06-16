@@ -55,6 +55,4 @@ public class GpsPermissionActivity extends AppCompatActivity implements GpsPermi
             }
         }
     }
-
-
 }
