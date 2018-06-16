@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                             crossedUser.crossedUser.add(beacon.getId3().toInt());
 
                             //すれ違ったapiをたたく
-
+                            mainPresenter.postCrossMusic(2,3);
                         }
                     }
                     userFlag = false;
