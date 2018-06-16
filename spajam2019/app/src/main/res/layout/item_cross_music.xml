@@ -9,45 +9,69 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="75dp">
 
-        <TextView
-            android:id="@+id/musicTitle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="10dp"
+            android:paddingRight="200dp"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/buttonAccept"
+            <TextView
+                android:id="@+id/musicTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Music Title" />
+
+            <TextView
+                android:id="@+id/artistName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Artist Name" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="10dp"
             android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/accept" />
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/buttonDeny"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/deny" />
+            <ImageButton
+                android:id="@+id/buttonPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/play" />
 
-        <ImageButton
-            android:id="@+id/buttonPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/play" />
+            <ImageButton
+                android:id="@+id/buttonDeny"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/deny" />
+
+            <ImageButton
+                android:id="@+id/buttonAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/accept" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
