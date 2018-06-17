@@ -142,7 +142,7 @@ public class CrossPresenter implements CrossContract.Presenter {
                 .subscribe(new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-
+                        getPossessedCrossMusic(MainActivity.getUserId());
                     }
 
                     @Override
@@ -159,7 +159,7 @@ public class CrossPresenter implements CrossContract.Presenter {
                 .subscribe(new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-
+                        getPossessedCrossMusic(MainActivity.getUserId());
                     }
 
                     @Override
