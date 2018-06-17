@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     static BeaconManager beaconManager;
     public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
     static final String BEACON_UUID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
-    private static final int userId = 3;
+    private static final int userId = 2;
 
     @Inject
     MainPresenter mainPresenter;
@@ -150,11 +150,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onResume() {
         super.onResume();
         beaconManager.bind(this);
+        beaconManager.setForegroundBetweenScanPeriod(100);
+        beaconManager.setForegroundScanPeriod(100);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        stopMonitoringBeaconsInRegion();
         beaconManager.unbind(this);
     }
 
@@ -187,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         } catch (RemoteException e) {
         }
 
-
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                         }
                     }
                     if (userFlag == false) {
-                        if (beacon.getRssi() >= -50) {
+                        if (beacon.getRssi() >= -70) {
                             handler.post(() -> {
                                 Toast toast = Toast.makeText(getApplicationContext(), "すれ違いました", Toast.LENGTH_SHORT);
                                 toast.show();
@@ -234,13 +236,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     public void stopMonitoringBeaconsInRegion() {   //ビーコンの監視を止める
         try {
-            beaconManager.stopRangingBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
+            beaconManager.stopRangingBeaconsInRegion(new Region("SPAJAM2018", Identifier.parse(BEACON_UUID), null, null));
             System.out.println("レンジング終了");
         } catch (RemoteException e) {
         }
 
         try {
-            beaconManager.stopMonitoringBeaconsInRegion(new Region("ISDL", Identifier.parse(BEACON_UUID), null, null));
+            beaconManager.stopMonitoringBeaconsInRegion(new Region("SPAJAM2018", Identifier.parse(BEACON_UUID), null, null));
             System.out.println("領域監視終了");
         } catch (RemoteException e) {
         }
