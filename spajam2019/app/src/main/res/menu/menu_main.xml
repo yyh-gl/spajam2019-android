@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_start_live"
-        android:icon="@drawable/microphone"
+        android:icon="@drawable/microphone_monoclo"
         android:title="test"
         app:showAsAction="always" />
 </menu>
