@@ -29,8 +29,8 @@ public class ApiModule {
     @Provides
     public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl("http://119.229.69.110:62455/api/") // ここのURLは本田が立てるサーバURL
-//                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // ここのURLは本田が立てるサーバURL
+                .baseUrl("http://localhost:3000/api/") // サーバURL
+//                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // サーバURL
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

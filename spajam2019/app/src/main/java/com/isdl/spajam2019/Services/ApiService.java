@@ -21,7 +21,7 @@ import retrofit2.http.Query;
 /**
  * [@GET]，[@POST]等でリクエスト種別を変更
  * <p>
- * エンドポイントURL:http://119.228.76.176:62455/api/
+ * エンドポイントURL:http://localhost:3000/api/
  * <p>
  * 参考　https://qiita.com/hymmr/items/cbb1013617cd43b8c7c4
  */
