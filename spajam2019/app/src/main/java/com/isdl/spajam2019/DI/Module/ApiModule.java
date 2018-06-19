@@ -29,7 +29,7 @@ public class ApiModule {
     @Provides
     public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl("http://localhost:3000/api/") // サーバURL
+                .baseUrl("http://10.0.2.2:3000/api/") // サーバURL
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
