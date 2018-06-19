@@ -30,7 +30,6 @@ public class ApiModule {
     public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl("http://localhost:3000/api/") // サーバURL
-//                .baseUrl("https://radiant-reaches-45097.herokuapp.com/") // サーバURL
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
