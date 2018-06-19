@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     static BeaconManager beaconManager;
     public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
     static final String BEACON_UUID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
-    private static final int userId = 2;
+    private static final int userId = 5;
 
     @Inject
     MainPresenter mainPresenter;
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                         }
                     }
                     if (userFlag == false) {
-                        if (beacon.getRssi() >= -70) {
+                        if (beacon.getRssi() >= -100) {
                             handler.post(() -> {
                                 Toast toast = Toast.makeText(getApplicationContext(), "すれ違いました", Toast.LENGTH_SHORT);
                                 toast.show();
